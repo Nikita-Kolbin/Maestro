@@ -1,7 +1,10 @@
 package admin
 
+import "context"
+
 type Service interface {
-	Foo()
+	GetJWTSecret() string
+	CreateAdmin(ctx context.Context, email, password string) (int, error)
 }
 
 type Admin struct {
