@@ -2,7 +2,8 @@ package repository
 
 import (
 	"context"
-
+	"database/sql"
+	"errors"
 	"github.com/Nikita-Kolbin/Maestro/internal/app/model"
 )
 
@@ -22,4 +23,24 @@ func (r *Repository) CreateAdmin(ctx context.Context, email, passwordHash string
 	}
 
 	return id, nil
+}
+
+func (r *Repository) GetAdminIdByEmailPassword(ctx context.Context, email, passwordHash string) (*model.Admin, error) {
+	query := `
+	SELECT id, email, first_name, last_name, father_name, city, 
+       telegram, image_id, email_notification, telegram_notification
+	FROM admins WHERE email=$1 AND password_hash=$2`
+
+	admin := &model.Admin{}
+
+	err := r.conn.GetContext(ctx, admin, query, email, passwordHash)
+
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, model.ErrWrongEmailOrPassword
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	return admin, nil
 }

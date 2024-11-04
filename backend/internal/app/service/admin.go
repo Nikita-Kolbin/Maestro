@@ -15,3 +15,13 @@ func (s *Service) CreateAdmin(ctx context.Context, email, password string) (int,
 
 	return s.repo.CreateAdmin(ctx, email, hash)
 }
+
+func (s *Service) GetAdminIdByEmailPassword(ctx context.Context, email, password string) (*model.Admin, error) {
+	if !validEmail(email) {
+		return nil, model.ErrInvalidEmail
+	}
+
+	hash := generatePasswordHash(password)
+
+	return s.repo.GetAdminIdByEmailPassword(ctx, email, hash)
+}

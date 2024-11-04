@@ -43,6 +43,7 @@ func New(ctx context.Context, srv service, address string) http.Handler {
 
 	// handlers
 	router.Post("/api/admin/sign-up", adminAPI.SignUp)
+	router.Post("/api/admin/sign-in", adminAPI.SignIn)
 
 	return router
 }
