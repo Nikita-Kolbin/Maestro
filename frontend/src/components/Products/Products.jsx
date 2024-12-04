@@ -7,17 +7,25 @@ import Sidebar from '../Sidebar/Sidebar'
 import cabinetStyles from '../Cabinet/cabinet.module.scss'
 import stylesTable from '../Table/table.module.scss'
 import ProductsModal from './Products-modal/Products-modal'
+import { useSelector } from 'react-redux'
 
 const Products = () => {
 	const [dataTable, setDataTable] = useState([])
 
-	useEffect(() => {
+	/* useEffect(() => {
 		axios('https://jsonplaceholder.typicode.com/users')
 			.then(response => {
 				setDataTable(response.data)
 			})
 			.catch(error => console.log(`setDataTable`, error))
-	}, [])
+	}, []) */
+
+	
+
+	const data = useSelector(state => state.Products)
+
+	console.log('useSelector Products.list')
+	console.log(data)
 
 	const columns = [
 		{ heading: 'Товар', value: 'name' },

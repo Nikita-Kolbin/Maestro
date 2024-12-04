@@ -6,31 +6,33 @@ import { Input, SelectIn, TextArea, FileIn } from '../../Input/Input'
 import Button from '../../button/button'
 
 const ProductsModal = () => {
-	const handleModalClick = ({ currentTarget, target }) => {
+	/* const handleModalClick = ({ currentTarget, target }) => {
 		const isClickedOnBackdrop = target === currentTarget
 
 		if (isClickedOnBackdrop) {
 			currentTarget.close()
 		}
 	}
-	const productModal = document.getElementById('productModal')
-	productModal.addEventListener('click', handleModalClick)
+	const productModal = document.getElementById('productModal')   //todo close modal on click
+	productModal?.addEventListener('click', handleModalClick) */
 
 	return (
-		<dialog className={styles.productModal} id='productModal' open>
+		<dialog className={styles.productModal} id='productModal'>
 			<div className={styles.productModal__wrapper}>
 				<h3 className={styles.productModal__title}>Добавление товара</h3>
-				<form method='dialog'>
+				<form method='dialog' className={styles.productModal__form}>
 					<Input
 						type={'text'}
 						id={'nameProduct'}
 						placeholder={'Введите название продукта'}
 						label={'Наименование'}
+						required={true}
 					/>
 					<SelectIn
 						id={'categoryProduct'}
 						placeholder={'Выберите категорию'}
 						label={'Категория'}
+						required={true}
 					/>
 					<div className={styles.productModal__uniqueField}>
 						<Input
@@ -38,12 +40,14 @@ const ProductsModal = () => {
 							id={'costProduct'}
 							placeholder={'Введите цену'}
 							label={'Цена'}
+							required={true}
 						/>
 						<Input
 							type={'number'}
 							id={'countProduct'}
 							placeholder={'Введите количество'}
 							label={'Количество'}
+							required={true}
 						/>
 					</div>
 					<div className={styles.productModal__textareaWrapper}>
@@ -52,6 +56,7 @@ const ProductsModal = () => {
 							id={'descriptionProduct'}
 							placeholder={'Введите описание'}
 							label={'Описание'}
+							
 						/>
 					</div>
 					<div className={styles.productModal__fileWrapper}>

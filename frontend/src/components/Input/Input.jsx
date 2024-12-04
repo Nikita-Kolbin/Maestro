@@ -11,9 +11,11 @@ export const Input = props => {
 					className={styles.label__input}
 					type={props.type}
 					name={props.id}
+					required={props.required}
 					id={props.id}
 					disabled={props.isDisable}
 					placeholder={props.placeholder}
+					ref={props.ref}
 				/>{' '}
 			</label>
 		</>
@@ -28,11 +30,13 @@ export const TextArea = props => {
 					className={styles.label__textArea}
 					type={props.type}
 					name={props.id}
+					required={props.required}
 					id={props.id}
 					disabled={props.isDisable}
 					placeholder={props.placeholder}
 					cols='40'
 					rows='3'
+					ref={props.ref}
 				></textarea>
 			</label>
 		</>
@@ -47,11 +51,11 @@ export const SelectIn = props => {
 					className={styles.label__input}
 					type={props.type}
 					name={props.id}
+					required = {props.required}
 					id={props.id}
 					disabled={props.isDisable}
 					placeholder={props.placeholder}
-					cols='40'
-					rows='3'
+					ref={props.ref}
 				></select>
 			</label>
 		</>
@@ -66,9 +70,11 @@ export const FileIn = props => {
 					className={styles.label__file}
 					type={'file'}
 					name={props.id}
+					required={props.required}
 					id={props.id}
 					disabled={props.isDisable}
 					placeholder={props.placeholder}
+					ref={props.ref}
 				></input>
 			</label>
 		</>

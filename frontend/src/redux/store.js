@@ -1,9 +1,10 @@
-import {configureStore} from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './slices/userSlice'
-import {useSelector, useDicpatch} from 'react-redux'
+import productsReducer from './slices/productsSlice'
 
 export const store = configureStore({
-    reducer: {
-        user: userReducer,
-    },
+	reducer: {
+		user: userReducer,
+		products: productsReducer,
+	},
 })

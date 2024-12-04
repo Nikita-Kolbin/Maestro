@@ -1,17 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { $host } from '../../http'
+import { getProductsAPI } from '../../http/productsAPI'
 
 const initialState = {
 	list: [],
 	isLoading: null,
 }
 
-export const getProducts = createAsyncThunk(
+const getProducts = createAsyncThunk(
 	'product/getProducts',
 	async (_, thunkAPI) => {
 		try {
-			const res = await $host.get('api/product/get-active-by-alias')
-			return res.data
+			const res = await getProductsAPI('web')
+			console.log('getprod');
+			console.log(res);
+			
 		} catch (err) {
 			alert(err.response.data.error)
 			console.log(err)
@@ -39,5 +42,7 @@ const productsSlice = createSlice({
 			})
 	},
 })
+
+
 
 export default productsSlice.reducer

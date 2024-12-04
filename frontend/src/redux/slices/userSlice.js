@@ -3,13 +3,13 @@ import { $host } from '../../http'
 import { jwtDecode } from 'jwt-decode'
 
 const initialState = {
-	email: null,
+	email: localStorage?.getItem('email'),
 	phone: '+79222587852',
-	token: null,
-	id: null,
-	status: null,
+	token: localStorage?.getItem('token'),
+	id: jwtDecode(localStorage?.getItem('token')).id,
+	status: localStorage.getItem('token') ? 'resolved' : null,
 	error: null,
-	isAuth: false,
+	isAuth: !!localStorage?.getItem('email'),
 }
 
 export const registration = createAsyncThunk(
@@ -57,12 +57,16 @@ const userSlice = createSlice({
 		}, */
 		removeUser(state) {
 			state.email = null
-			/* state.phone = null */  // todo phone from back
+			/* state.phone = null */ // todo phone from back
 			state.token = null
 			state.id = null
 			state.status = null
 			state.error = null
 			state.isAuth = false
+
+			localStorage.removeItem('token')
+			localStorage.removeItem('email')
+			/* localStorage.removeItem('token') */
 		},
 	},
 	extraReducers: builder => {
@@ -73,11 +77,14 @@ const userSlice = createSlice({
 			})
 			.addCase(registration.fulfilled, (state, action) => {
 				state.status = 'resolved'
-				state.email = action.meta.arg.email
-				state.token = action.payload.token
 				state.id = jwtDecode(action.payload.token).id
-
 				state.isAuth = true
+
+				state.email = action.meta.arg.email
+				localStorage.setItem('email', action.meta.arg.email)
+
+				state.token = action.payload.token
+				localStorage.setItem('token', action.payload.token)
 			})
 			.addCase(registration.rejected, (state, action) => {
 				state.status = 'rejected'
@@ -89,19 +96,23 @@ const userSlice = createSlice({
 			})
 			.addCase(login.fulfilled, (state, action) => {
 				state.status = 'resolved'
-				state.email = action.meta.arg.email
-				state.token = action.payload.token
 				state.id = jwtDecode(action.payload.token).id
+
+				state.email = action.meta.arg.email
+				localStorage.setItem('email', action.meta.arg.email)
+
+				state.token = action.payload.token
+				localStorage.setItem('token', action.payload.token)
 
 				state.isAuth = true
 			})
-			.addCase(login.rejected, (state, action) => {
+			.addCase(login.rejected, state => {
 				state.status = 'rejected'
 				state.isAuth = false
 			})
 	},
 })
 
-export const { setUser, removeUser } = userSlice.actions
+export const { removeUser } = userSlice.actions
 
 export default userSlice.reducer

@@ -98,7 +98,7 @@ const TableHeadItem = ({ item, styles }) => (
 const TableRow = ({ item, column, styles }) => (
 	<tr className={styles.table__row}>
 		{column.map((columnItem, index) => {
-			return <td className={styles.table__cell}>{item[columnItem.value]}</td>
+			return <td key={index} className={styles.table__cell}>{item[columnItem.value]}</td>
 		})}
 	</tr>
 )
