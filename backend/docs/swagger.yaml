@@ -1,0 +1,759 @@
+basePath: /api
+definitions:
+  model.AddProductToCartRequest:
+    properties:
+      count:
+        type: integer
+      product_id:
+        type: integer
+    type: object
+  model.AdminEmailPasswordRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  model.BlockDTO:
+    properties:
+      id:
+        type: integer
+      section_uuid:
+        type: string
+      text:
+        type: string
+      website_alias:
+        type: string
+    type: object
+  model.CartItemResponse:
+    properties:
+      count:
+        type: integer
+      product:
+        $ref: '#/definitions/model.ProductDTO'
+    type: object
+  model.CartResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/model.CartItemResponse'
+        type: array
+    type: object
+  model.CreateProductRequest:
+    properties:
+      active:
+        type: boolean
+      description:
+        type: string
+      image_ids:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      price:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+      website_alias:
+        type: string
+    type: object
+  model.CreateWebsiteRequest:
+    properties:
+      alias:
+        type: string
+    type: object
+  model.CustomerAliasEmailPasswordRequest:
+    properties:
+      alias:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  model.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  model.MakeOrderRequest:
+    properties:
+      comment:
+        type: string
+    type: object
+  model.OrderDTO:
+    properties:
+      comment:
+        type: string
+      customer_id:
+        type: integer
+      date_time:
+        type: string
+      id:
+        type: integer
+      items:
+        items:
+          $ref: '#/definitions/model.OrderItemDTO'
+        type: array
+      status:
+        type: integer
+      total_sum:
+        type: integer
+    type: object
+  model.OrderItemDTO:
+    properties:
+      count:
+        type: integer
+      product:
+        $ref: '#/definitions/model.ProductDTO'
+    type: object
+  model.ProductDTO:
+    properties:
+      active:
+        type: boolean
+      description:
+        type: string
+      id:
+        type: integer
+      image_ids:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      price:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+      website_alias:
+        type: string
+    type: object
+  model.SectionDTO:
+    properties:
+      blocks:
+        items:
+          $ref: '#/definitions/model.BlockDTO'
+        type: array
+      full_height:
+        type: boolean
+      full_width:
+        type: boolean
+      height:
+        type: integer
+      uuid:
+        type: string
+      website_alias:
+        type: string
+      width:
+        type: integer
+    type: object
+  model.SetBlockRequest:
+    properties:
+      text:
+        type: string
+    type: object
+  model.SetSectionRequest:
+    properties:
+      blocks:
+        items:
+          $ref: '#/definitions/model.SetBlockRequest'
+        type: array
+      full_height:
+        type: boolean
+      full_width:
+        type: boolean
+      height:
+        type: integer
+      width:
+        type: integer
+    type: object
+  model.SetWebsiteStyleRequest:
+    properties:
+      sections:
+        items:
+          $ref: '#/definitions/model.SetSectionRequest'
+        type: array
+      website_alias:
+        type: string
+    type: object
+  model.UpdateProductRequest:
+    properties:
+      active:
+        type: boolean
+      description:
+        type: string
+      id:
+        type: integer
+      image_ids:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      price:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
+  model.UploadFileResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  model.WebsiteDTO:
+    properties:
+      active:
+        type: boolean
+      alias:
+        type: string
+      id:
+        type: integer
+    type: object
+  model.WebsiteStylesDTO:
+    properties:
+      sections:
+        items:
+          $ref: '#/definitions/model.SectionDTO'
+        type: array
+    type: object
+host: localhost:8082
+info:
+  contact: {}
+  title: Maestro
+  version: "1.0"
+paths:
+  /admin/sign-in:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: sign in
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.AdminEmailPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: SingIn admin
+      tags:
+      - admin
+  /admin/sign-up:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: sign up
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.AdminEmailPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: SingUp admin
+      tags:
+      - admin
+  /cart/add-product:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: product id and count
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.AddProductToCartRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CartResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Add product to customer's cart
+      tags:
+      - cart
+  /cart/get:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CartResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get customer's cart
+      tags:
+      - cart
+  /customer/sign-in:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: sign in
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.CustomerAliasEmailPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: SingIn customer
+      tags:
+      - customer
+  /customer/sign-up:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: sign up
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.CustomerAliasEmailPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: SingUp customer
+      tags:
+      - customer
+  /file/get-image/{image-id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: image id
+        in: path
+        name: image-id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: integer
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get image by id
+      tags:
+      - file
+  /file/upload-image:
+    post:
+      consumes:
+      - image/jpeg
+      parameters:
+      - description: image
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UploadFileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Upload image
+      tags:
+      - file
+  /order/get-my:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OrderDTO'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get customers orders
+      tags:
+      - order
+  /order/make:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: customer comment to order
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.MakeOrderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OrderDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Make order by cart
+      tags:
+      - order
+  /product/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: product info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create product
+      tags:
+      - product
+  /product/get-active-by-alias:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: website alias
+        in: query
+        name: alias
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.ProductDTO'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get active products in website by alias
+      tags:
+      - product
+  /product/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: product info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update product
+      tags:
+      - product
+  /website/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: alias new website
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateWebsiteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebsiteDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create website
+      tags:
+      - website
+  /website/get-my-website:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebsiteDTO'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get admins website
+      tags:
+      - website
+  /website/set-style:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: styles and alias
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.SetWebsiteStyleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebsiteStylesDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Set new website styles
+      tags:
+      - website
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: X-Token
+    type: apiKey
+swagger: "2.0"
