@@ -9,15 +9,15 @@ import { check } from '../../http/userAPI'
 
 const App = () => {
 
-	const [isLoading, setLoading] = useState(true)
+	/* const [isLoading, setLoading] = useState(true)
 
 	useEffect(() => {
 		if(check()) {
 			localStorage.getItem('token')
-		}
 			
-		
-	})
+		}
+		setLoading()
+	}) */
 
 	return (
 		<div className={styles.app}>

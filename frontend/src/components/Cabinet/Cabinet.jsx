@@ -12,6 +12,8 @@ import Select from '../Select/Select'
 import { selectMessanger } from '../../utils/select.js'
 import { useAuth } from '../../hooks/useAuth.js'
 import Input from '../Input/Input.jsx'
+import { createSiteAPI, getSiteAPI } from '../../http/websiteAPI'
+import axios from 'axios'
 
 const Cabinet = () => {
 	const location = useLocation()
@@ -24,6 +26,23 @@ const Cabinet = () => {
 	const toggleEdit = () => {
 		isEditPage ? setToggleEdit(false) : setToggleEdit(true)
 		console.log(isEditPage)
+	}
+
+	const www = 'wwwwww'
+
+	const createSite = () => {
+		/* axios.post(
+			'http://localhost:8082/api/website/create',
+			{
+				alias: 'ssasas',
+			},
+			{ headers: { 'X-Token': localStorage.getItem('token') } }
+		) */
+
+		createSiteAPI('firstSite')
+			.then((name, id) => console.log(name, id))
+			.catch(er => console.log(er))
+		
 	}
 
 	return (
@@ -112,6 +131,17 @@ const Cabinet = () => {
 							</ul>
 						</label>
 					</form>
+					<div>
+						<h2 className={styles.cabinet__title}>Мой сайт</h2>
+						<Button
+							className={styles.cabinet__buttonEdit}
+							onClick={() => createSite()}
+							colorBack={'var(--color-light)'}
+							buttonText={'Создать сайт'}
+							width={'143px'}
+							height={'36px'}
+						></Button>
+					</div>
 					<div className={styles.cabinet__notification}>
 						<h2 className={styles.cabinet__title}>Контактная информация</h2>
 						<ul className={styles.cabinet__notificationList}>

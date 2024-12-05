@@ -2,7 +2,7 @@ import { $authHost } from '.'
 
 export const createSiteAPI = async nameWebsite => {
 	const response = await $authHost.post('api/website/create', {
-		nameWebsite,
+		alias: nameWebsite,
 	})
 	return response
 }
