@@ -12,7 +12,7 @@ const Sidebar = () => {
 				<ul className={stylesNav.nav__list}>
 					<h2 className={stylesNav.nav__title}>CRM</h2>
 					<li className={stylesNav.nav__item}>
-						<NavLink active className={stylesNav.nav__link} to={ROUTES.CABINET}>
+						<NavLink className={stylesNav.nav__link} to={ROUTES.CABINET}>
 							Кабинет
 						</NavLink>
 					</li>

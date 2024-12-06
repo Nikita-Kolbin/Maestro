@@ -11,7 +11,7 @@ const Select = ({ styles, name, id, optionArray = [] }) => {
 			id={id}
 		>
 			{optionArray.map(item => (
-				<option className={styles.select__item} value={item}>
+				<option key={id + item} className={styles.select__item} value={item}>
 					{item}
 				</option>
 			))}
