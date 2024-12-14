@@ -14,17 +14,6 @@ definitions:
       password:
         type: string
     type: object
-  model.BlockDTO:
-    properties:
-      id:
-        type: integer
-      section_uuid:
-        type: string
-      text:
-        type: string
-      website_alias:
-        type: string
-    type: object
   model.CartItemResponse:
     properties:
       count:
@@ -135,42 +124,25 @@ definitions:
     type: object
   model.SectionDTO:
     properties:
-      blocks:
-        items:
-          $ref: '#/definitions/model.BlockDTO'
-        type: array
-      full_height:
-        type: boolean
-      full_width:
-        type: boolean
-      height:
+      id:
         type: integer
-      uuid:
+      image_id:
+        type: string
+      style_id:
+        type: integer
+      text:
         type: string
       website_alias:
-        type: string
-      width:
-        type: integer
-    type: object
-  model.SetBlockRequest:
-    properties:
-      text:
         type: string
     type: object
   model.SetSectionRequest:
     properties:
-      blocks:
-        items:
-          $ref: '#/definitions/model.SetBlockRequest'
-        type: array
-      full_height:
-        type: boolean
-      full_width:
-        type: boolean
-      height:
+      image_id:
+        type: string
+      style_id:
         type: integer
-      width:
-        type: integer
+      text:
+        type: string
     type: object
   model.SetWebsiteStyleRequest:
     properties:

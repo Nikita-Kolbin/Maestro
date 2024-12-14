@@ -25,23 +25,11 @@ CREATE TABLE IF NOT EXISTS websites (
 
 CREATE TABLE IF NOT EXISTS sections (
     id            BIGSERIAL PRIMARY KEY,
-    uuid          TEXT UNIQUE,
     website_alias TEXT NOT NULL,
-    width         SMALLINT NOT NULL,
-    full_width    BOOLEAN NOT NULL,
-    height        SMALLINT NOT NULL,
-    full_height   BOOLEAN NOT NULL,
+    style_id      BIGINT NOT NULL,
+    text          TEXT NOT NULL,
+    image_id      TEXT NOT NULL,
 
-    FOREIGN KEY (website_alias) REFERENCES websites (alias)
-);
-
-CREATE TABLE IF NOT EXISTS blocks (
-    id            SERIAL PRIMARY KEY,
-    section_uuid  TEXT NOT NULL,
-    website_alias TEXT NOT NULL,
-    text          TEXT NOT NULL DEFAULT '',
-
-    FOREIGN KEY (section_uuid) REFERENCES sections (uuid),
     FOREIGN KEY (website_alias) REFERENCES websites (alias)
 );
 
