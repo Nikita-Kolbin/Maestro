@@ -861,23 +861,6 @@ const docTemplate = `{
                 }
             }
         },
-        "model.BlockDTO": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "section_uuid": {
-                    "type": "string"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "website_alias": {
-                    "type": "string"
-                }
-            }
-        },
         "model.CartItemResponse": {
             "type": "object",
             "properties": {
@@ -1048,36 +1031,19 @@ const docTemplate = `{
         "model.SectionDTO": {
             "type": "object",
             "properties": {
-                "blocks": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.BlockDTO"
-                    }
-                },
-                "full_height": {
-                    "type": "boolean"
-                },
-                "full_width": {
-                    "type": "boolean"
-                },
-                "height": {
+                "id": {
                     "type": "integer"
                 },
-                "uuid": {
+                "image_id": {
+                    "type": "string"
+                },
+                "style_id": {
+                    "type": "integer"
+                },
+                "text": {
                     "type": "string"
                 },
                 "website_alias": {
-                    "type": "string"
-                },
-                "width": {
-                    "type": "integer"
-                }
-            }
-        },
-        "model.SetBlockRequest": {
-            "type": "object",
-            "properties": {
-                "text": {
                     "type": "string"
                 }
             }
@@ -1085,23 +1051,14 @@ const docTemplate = `{
         "model.SetSectionRequest": {
             "type": "object",
             "properties": {
-                "blocks": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.SetBlockRequest"
-                    }
+                "image_id": {
+                    "type": "string"
                 },
-                "full_height": {
-                    "type": "boolean"
-                },
-                "full_width": {
-                    "type": "boolean"
-                },
-                "height": {
+                "style_id": {
                     "type": "integer"
                 },
-                "width": {
-                    "type": "integer"
+                "text": {
+                    "type": "string"
                 }
             }
         },
