@@ -11,6 +11,7 @@ import (
 const ENVInDocker = "IN_DOCKER"
 
 type Config struct {
+	Env       string `env:"JWT_SECRET" envDefault:"dev"`
 	JWTSecret string `env:"JWT_SECRET"`
 
 	Listener ListenerConfig `envPrefix:"LISTENER_"`

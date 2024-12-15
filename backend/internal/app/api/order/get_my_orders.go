@@ -14,7 +14,7 @@ import (
 // @Tags order
 // @Accept   json
 // @Produce  json
-// @Success      200   {object}   model.OrderDTO
+// @Success      200   {object}   []model.OrderDTO
 // @Failure      403   {object}   model.ErrorResponse
 // @Failure      500   {object}   model.ErrorResponse
 // @Router /order/get-my [get]

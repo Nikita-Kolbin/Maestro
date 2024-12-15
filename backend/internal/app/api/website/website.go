@@ -10,6 +10,7 @@ type Service interface {
 	GetWebsiteByAdminId(ctx context.Context, adminId int) (*model.Website, error)
 	SetWebsiteStyle(ctx context.Context, websiteAlias string, sections []*model.Section) ([]*model.Section, error)
 	GetWebsiteByAlias(ctx context.Context, alias string) (*model.Website, error)
+	GetWebsiteStyle(ctx context.Context, websiteAlias string) ([]*model.Section, error)
 }
 
 type Website struct {

@@ -403,6 +403,54 @@ const docTemplate = `{
                 }
             }
         },
+        "/order/get-all": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "order"
+                ],
+                "summary": "Get all orders in website TO ADMIN",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.OrderDTO"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/order/get-my": {
             "get": {
                 "security": [
@@ -424,7 +472,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.OrderDTO"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.OrderDTO"
+                            }
                         }
                     },
                     "403": {
@@ -593,6 +644,54 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/get-all": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "Get all products in website TO ADMIN",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.ProductDTO"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/model.ErrorResponse"
                         }
@@ -775,6 +874,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/website/get-style": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "website"
+                ],
+                "summary": "Get website styles by alias",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "website alias",
+                        "name": "alias",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.WebsiteStylesDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/website/set-style": {
             "post": {
                 "security": [
@@ -857,23 +999,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.BlockDTO": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "section_uuid": {
-                    "type": "string"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "website_alias": {
                     "type": "string"
                 }
             }
@@ -1048,36 +1173,19 @@ const docTemplate = `{
         "model.SectionDTO": {
             "type": "object",
             "properties": {
-                "blocks": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.BlockDTO"
-                    }
-                },
-                "full_height": {
-                    "type": "boolean"
-                },
-                "full_width": {
-                    "type": "boolean"
-                },
-                "height": {
+                "id": {
                     "type": "integer"
                 },
-                "uuid": {
+                "image_id": {
+                    "type": "string"
+                },
+                "style_id": {
+                    "type": "integer"
+                },
+                "text": {
                     "type": "string"
                 },
                 "website_alias": {
-                    "type": "string"
-                },
-                "width": {
-                    "type": "integer"
-                }
-            }
-        },
-        "model.SetBlockRequest": {
-            "type": "object",
-            "properties": {
-                "text": {
                     "type": "string"
                 }
             }
@@ -1085,23 +1193,14 @@ const docTemplate = `{
         "model.SetSectionRequest": {
             "type": "object",
             "properties": {
-                "blocks": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.SetBlockRequest"
-                    }
+                "image_id": {
+                    "type": "string"
                 },
-                "full_height": {
-                    "type": "boolean"
-                },
-                "full_width": {
-                    "type": "boolean"
-                },
-                "height": {
+                "style_id": {
                     "type": "integer"
                 },
-                "width": {
-                    "type": "integer"
+                "text": {
+                    "type": "string"
                 }
             }
         },
