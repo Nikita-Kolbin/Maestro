@@ -67,6 +67,7 @@ func New(_ context.Context, srv service, address string) http.Handler {
 
 	router.Post("/api/website/create", authMiddleware(websiteAPI.CreateWebsite))
 	router.Post("/api/website/set-style", authMiddleware(websiteAPI.SetStyle))
+	router.Get("/api/website/get-style", websiteAPI.GetStyle)
 	router.Get("/api/website/get-my-website", authMiddleware(websiteAPI.GetMyWebsite))
 
 	router.Post("/api/customer/sign-up", customerAPI.CustomerSignUp)
@@ -75,6 +76,7 @@ func New(_ context.Context, srv service, address string) http.Handler {
 	router.Post("/api/product/create", authMiddleware(productAPI.CreateProduct))
 	router.Put("/api/product/update", authMiddleware(productAPI.UpdateProduct))
 	router.Get("/api/product/get-active-by-alias", productAPI.GetActiveProductByAlias)
+	router.Get("/api/product/get-all", authMiddleware(productAPI.GetAll))
 
 	router.Post("/api/file/upload-image", fileAPI.UploadImageFile)
 	router.Get("/api/file/get-image/{image-id}", fileAPI.GetImageFile)
@@ -84,6 +86,7 @@ func New(_ context.Context, srv service, address string) http.Handler {
 
 	router.Post("/api/order/make", authMiddleware(orderAPI.MakeOrder))
 	router.Get("/api/order/get-my", authMiddleware(orderAPI.GetMyOrders))
+	router.Get("/api/order/get-all", authMiddleware(orderAPI.GetAll))
 
 	return router
 }

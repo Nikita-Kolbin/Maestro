@@ -85,11 +85,28 @@ func (r *Repository) CreateOrderItem(ctx context.Context, tx *sqlx.Tx, orderId, 
 }
 
 func (r *Repository) GetOrderIdsByCustomerId(ctx context.Context, customerId int) ([]int, error) {
-	query := `SELECT id FROM orders WHERE customer_id = $1`
+	query := `SELECT id FROM orders WHERE customer_id = $1 ORDER BY date_time DESC`
 
 	ids := make([]int, 0)
 
 	err := r.conn.SelectContext(ctx, &ids, query, customerId)
+	if err != nil {
+		return nil, err
+	}
+
+	return ids, nil
+}
+
+func (r *Repository) GetOrderIdsByAlias(ctx context.Context, alias string) ([]int, error) {
+	query := `
+	SELECT o.id as alias FROM orders o
+	JOIN customers c ON c.id = o.customer_id
+	WHERE c.website_alias = $1
+	ORDER BY o.date_time DESC`
+
+	ids := make([]int, 0)
+
+	err := r.conn.SelectContext(ctx, &ids, query, alias)
 	if err != nil {
 		return nil, err
 	}
