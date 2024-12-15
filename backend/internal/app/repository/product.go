@@ -12,7 +12,7 @@ import (
 
 func (r *Repository) CreateProduct(ctx context.Context, product *model.Product) (*model.Product, error) {
 	query := `
-	INSERT INTO products 
+	INSERT INTO products
     (website_alias, name, description, price, image_ids, active, tags) 
 	VALUES ($1, $2, $3, $4, $5, $6, $7)
     RETURNING id, website_alias, name, description, price, image_ids, active, tags`
@@ -118,6 +118,33 @@ func (r *Repository) GetActiveProductsByAlias(ctx context.Context, alias string)
 	query := `
 	SELECT id, website_alias, name, description, price, image_ids, active, tags 
 	FROM products WHERE website_alias = $1 AND active
+	ORDER BY id`
+
+	rows, err := r.conn.QueryContext(ctx, query, alias)
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		_ = rows.Close()
+	}()
+
+	products := make(model.ProductList, 0)
+	for rows.Next() {
+		product := &model.Product{}
+		if err = rows.Scan(&product.Id, &product.WebsiteAlias, &product.Name, &product.Description, &product.Price,
+			pq.Array(&product.ImageIds), &product.Active, pq.Array(&product.Tags)); err != nil {
+			return nil, err
+		}
+		products = append(products, product)
+	}
+
+	return products, rows.Err()
+}
+
+func (r *Repository) GetAllProductsByAlias(ctx context.Context, alias string) (model.ProductList, error) {
+	query := `
+	SELECT id, website_alias, name, description, price, image_ids, active, tags 
+	FROM products WHERE website_alias = $1
 	ORDER BY id`
 
 	rows, err := r.conn.QueryContext(ctx, query, alias)

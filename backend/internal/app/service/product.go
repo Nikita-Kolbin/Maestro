@@ -21,3 +21,7 @@ func (s *Service) GetProductById(ctx context.Context, id int) (*model.Product, e
 func (s *Service) GetActiveProductsByAlias(ctx context.Context, alias string) (model.ProductList, error) {
 	return s.repo.GetActiveProductsByAlias(ctx, alias)
 }
+
+func (s *Service) GetAllProductsByAlias(ctx context.Context, alias string) (model.ProductList, error) {
+	return s.repo.GetAllProductsByAlias(ctx, alias)
+}

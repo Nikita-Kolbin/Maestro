@@ -38,3 +38,7 @@ func (s *Service) SetWebsiteStyle(
 
 	return s.repo.GetSectionsByWebsiteAlias(ctx, websiteAlias)
 }
+
+func (s *Service) GetWebsiteStyle(ctx context.Context, websiteAlias string) ([]*model.Section, error) {
+	return s.repo.GetSectionsByWebsiteAlias(ctx, websiteAlias)
+}

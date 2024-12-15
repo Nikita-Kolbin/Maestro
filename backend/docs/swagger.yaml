@@ -450,6 +450,36 @@ paths:
       summary: Upload image
       tags:
       - file
+  /order/get-all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.OrderDTO'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all orders in website TO ADMIN
+      tags:
+      - order
   /order/get-my:
     get:
       consumes:
@@ -460,7 +490,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.OrderDTO'
+            items:
+              $ref: '#/definitions/model.OrderDTO'
+            type: array
         "403":
           description: Forbidden
           schema:
@@ -578,6 +610,36 @@ paths:
       summary: Get active products in website by alias
       tags:
       - product
+  /product/get-all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.ProductDTO'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all products in website TO ADMIN
+      tags:
+      - product
   /product/update:
     put:
       consumes:
@@ -682,6 +744,34 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get admins website
+      tags:
+      - website
+  /website/get-style:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: website alias
+        in: query
+        name: alias
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebsiteStylesDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get website styles by alias
       tags:
       - website
   /website/set-style:
