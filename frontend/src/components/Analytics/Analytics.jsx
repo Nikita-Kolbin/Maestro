@@ -79,7 +79,7 @@ const Analytics = () => {
 						</li>
 					</ul>
 					<div className={styles.analytics__table}>
-						<Table data={dataTable} column={columns} styles={stylesAnalytics} />
+						<Table data={dataTable} columns={columns} styles={stylesAnalytics} />
 					</div>
 				</div>
 			</section>

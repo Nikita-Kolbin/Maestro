@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import styles from './select.module.scss'
 
-const Select = ({ styles, name, id, optionArray = [] }) => {
+const Select = ({ styles, name, id, optionArray = [], reducer }) => {
+	const [value, setValue] = useState()
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (!!reducer) {
+			dispatch(reducer(value))
+		}
+	}, [])
+
 	return (
 		<select
+			onChange={e => {
+				setValue(e.target.value)
+			}}
+			value={value}
 			className={styles.select}
 			type='select'
 			name={name}

@@ -11,6 +11,7 @@ import GOOGLE_IC from '../../assets/images/reg.sign-up/Google.svg'
 
 import Button from '../button/button'
 import { login, registration } from '../../redux/slices/userSlice'
+import { getSite } from '../../redux/slices/websiteSlice'
 
 /* import { registration, login } from '../../http/userAPI'
 import { setUser } from '../../redux/slices/userSlice' */
@@ -42,13 +43,12 @@ const Auth = () => {
 		}
 	}
 
-	
-
 	useEffect(() => {
 		console.log('pre redirect')
 		if (isAuth) {
 			console.log('redirect')
 			navigate(ROUTES.CABINET)
+			
 		} else {
 			navigate(ROUTES.SIGNIN)
 		}
@@ -82,7 +82,6 @@ const Auth = () => {
 						<input
 							className={styles.auth__field}
 							type='password'
-							name='password'
 							value={password}
 							onChange={e => setPassword(e.target.value)}
 							placeholder='Пароль'
@@ -93,7 +92,6 @@ const Auth = () => {
 							<input
 								className={styles.auth__field}
 								type='password'
-								name='password'
 								value={password}
 								onChange={e => setPassword(e.target.value)}
 								placeholder='Повторите пароль'

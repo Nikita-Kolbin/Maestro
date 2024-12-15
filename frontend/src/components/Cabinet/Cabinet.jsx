@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React, { useId, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-
-import PENCIL from '../../assets/images/pencil.png'
+import { useDispatch, useSelector } from 'react-redux'
 
 import styles from './cabinet.module.scss'
 import Sidebar from '../Sidebar/Sidebar'
@@ -10,16 +8,14 @@ import Button from '../button/button'
 import Toggle from '../Toggle/Toggle'
 import Select from '../Select/Select'
 import { selectMessanger } from '../../utils/select.js'
-import { useAuth } from '../../hooks/useAuth.js'
+
 import Input from '../Input/Input.jsx'
 import { createSiteAPI, getSiteAPI } from '../../http/websiteAPI'
-import axios from 'axios'
+import { getSite } from '../../redux/slices/websiteSlice'
 
 const Cabinet = () => {
-	const location = useLocation()
 	const [isEditPage, setToggleEdit] = useState(false)
 
-	const navigate = useNavigate()
 	const email = useSelector(state => state.user.email)
 	const phone = useSelector(state => state.user.phone)
 
@@ -28,21 +24,15 @@ const Cabinet = () => {
 		console.log(isEditPage)
 	}
 
-	const www = 'wwwwww'
+	const dispatch = useDispatch()
+
+	const siteNameRand = useId() + Math.random() //for test!!!
 
 	const createSite = () => {
-		/* axios.post(
-			'http://localhost:8082/api/website/create',
-			{
-				alias: 'ssasas',
-			},
-			{ headers: { 'X-Token': localStorage.getItem('token') } }
-		) */
-
-		createSiteAPI('firstSite')
+		createSiteAPI(siteNameRand)
 			.then((name, id) => console.log(name, id))
 			.catch(er => console.log(er))
-		
+		dispatch(getSite())
 	}
 
 	return (
@@ -113,8 +103,8 @@ const Cabinet = () => {
 								<li className={styles.cabinet__messangerItem}>
 									<Select
 										styles={styles}
-										name={'messanger'}
-										id={'messanger'}
+										name={'messangerSelect'}
+										id={'messangerSelect'}
 										optionArray={selectMessanger}
 									/>
 								</li>
@@ -122,10 +112,10 @@ const Cabinet = () => {
 									<input
 										className={styles.cabinet__input}
 										type='text'
-										name='messanger'
-										id='messanger'
+										name='messangerInput'
+										id='messangerInput'
 										placeholder='@example0'
-										disable={!isEditPage}
+										disabled={!isEditPage}
 									/>{' '}
 								</li>
 							</ul>

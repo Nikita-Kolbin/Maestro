@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useId } from 'react'
 
 import styles from './input.module.scss'
+import { useForm } from 'react-hook-form'
 
 export const Input = props => {
+	const { register } = useForm()
+
 	return (
 		<>
 			<label className={styles.label} htmlFor={props.id}>
@@ -15,7 +18,8 @@ export const Input = props => {
 					id={props.id}
 					disabled={props.isDisable}
 					placeholder={props.placeholder}
-					ref={props.ref}
+					/* ref={props.ref} */
+					{...props.register}
 				/>{' '}
 			</label>
 		</>
@@ -36,13 +40,14 @@ export const TextArea = props => {
 					placeholder={props.placeholder}
 					cols='40'
 					rows='3'
-					ref={props.ref}
+					{...props.register}
 				></textarea>
 			</label>
 		</>
 	)
 }
 export const SelectIn = props => {
+	const id = useId()
 	return (
 		<>
 			<label className={styles.label} htmlFor={props.id}>
@@ -51,12 +56,18 @@ export const SelectIn = props => {
 					className={styles.label__input}
 					type={props.type}
 					name={props.id}
-					required = {props.required}
+					required={props.required}
 					id={props.id}
 					disabled={props.isDisable}
 					placeholder={props.placeholder}
-					ref={props.ref}
-				></select>
+					{...props.register}
+				>
+					{props.optionArray.map(str => (
+						<option key={id + str} value={str}>
+							{str}
+						</option>
+					))}
+				</select>
 			</label>
 		</>
 	)
@@ -74,7 +85,8 @@ export const FileIn = props => {
 					id={props.id}
 					disabled={props.isDisable}
 					placeholder={props.placeholder}
-					ref={props.ref}
+					multiple
+					{...props.register}
 				></input>
 			</label>
 		</>

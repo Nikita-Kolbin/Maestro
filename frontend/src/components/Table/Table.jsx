@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import Select from '../Select/Select'
 
 import { productEdit, selectSort } from '../../utils/select'
 import { useLocation } from 'react-router-dom'
+import { productsModal } from '../../redux/slices/selectSlice'
+import { useDispatch } from 'react-redux'
 
 /* const filterRows = (searchText, listData) => {
 	if (!searchText) {
@@ -21,7 +23,7 @@ import { useLocation } from 'react-router-dom'
 	)
 } */
 
-const Table = ({ data, column, styles }) => {
+const Table = memo(({ data, columns, styles }) => {
 	/* const [listRow, setListRow] = useState(data)
 	const [searchTerm, setSearchTerm] = useState('')
 
@@ -35,6 +37,9 @@ const Table = ({ data, column, styles }) => {
 
 	const location = useLocation()
 	const [isProductsPage, setProductsPage] = useState(false)
+
+	/* 
+	console.log(data) */
 
 	useEffect(() => {
 		if (location.pathname === '/products') {
@@ -58,7 +63,7 @@ const Table = ({ data, column, styles }) => {
 						styles={styles}
 						name={'sort'}
 						id={'sort'}
-						optionArray={column.map(column => column.heading)}
+						optionArray={columns.map(column => column.heading)}
 					/>
 				</div>
 				{isProductsPage && (
@@ -68,6 +73,7 @@ const Table = ({ data, column, styles }) => {
 							name={'productsSelect'}
 							id={'productsSelect'}
 							optionArray={productEdit}
+							reducer={productsModal}
 						/>
 					</div>
 				)}
@@ -75,30 +81,40 @@ const Table = ({ data, column, styles }) => {
 			<table className={styles.table__body}>
 				<thead>
 					<tr>
-						{column.map((item, index) => (
+						{columns.map((item, index) => (
 							<TableHeadItem key={index} item={item} styles={styles} />
 						))}
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((item, index) => (
-						<TableRow key={index} item={item} column={column} styles={styles} />
-					))}
+					{data &&
+						data.map((item, index) => (
+							<TableRow
+								key={index}
+								item={item}
+								columns={columns}
+								styles={styles}
+							/>
+						))}
 				</tbody>
 			</table>
 		</section>
 	)
-}
+})
 
 const TableHeadItem = ({ item, styles }) => (
 	<th className={styles.table__header} key={item.id}>
 		{item.heading}
 	</th>
 )
-const TableRow = ({ item, column, styles }) => (
+const TableRow = ({ item, columns, styles }) => (
 	<tr className={styles.table__row}>
-		{column.map((columnItem, index) => {
-			return <td key={index} className={styles.table__cell}>{item[columnItem.value]}</td>
+		{columns.map((columnItem, index) => {
+			return (
+				<td key={index} className={styles.table__cell}>
+					{item[columnItem.value]}
+				</td>
+			)
 		})}
 	</tr>
 )

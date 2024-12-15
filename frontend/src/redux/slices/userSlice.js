@@ -6,7 +6,9 @@ const initialState = {
 	email: localStorage?.getItem('email'),
 	phone: '+79222587852',
 	token: localStorage?.getItem('token'),
-	id: jwtDecode(localStorage?.getItem('token')).id,
+	id: localStorage.getItem('token')
+		? jwtDecode(localStorage?.getItem('token')).id
+		: null,
 	status: localStorage.getItem('token') ? 'resolved' : null,
 	error: null,
 	isAuth: !!localStorage?.getItem('email'),

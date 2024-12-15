@@ -8,7 +8,6 @@ const Button = props => {
 		color: props.colorText,
 		height: props.height,
 		width: props.width,
-		
 	}
 
 	if (props.imageSrc) {
@@ -17,7 +16,7 @@ const Button = props => {
 				<button
 					className={styles.button}
 					style={styleElements}
-					type='button'
+					type={props.type ? props.type : 'button'}
 					onClick={props.onClick}
 				>
 					<img
@@ -36,7 +35,7 @@ const Button = props => {
 				<button
 					className={styles.button}
 					style={styleElements}
-					type='button'
+					type={props.type ? props.type : 'button'}
 					onClick={props.onClick}
 				>
 					<p className={styles.button__text}>{props.buttonText}</p>

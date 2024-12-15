@@ -1,38 +1,50 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { createSiteAPI, getSiteAPI } from '../../http/websiteAPI'
 
 const initialState = {
-	nameSite: null,
-	idSite: null,
-	active: null,
-	listBlocks: [],
-	status: null,
+	categoryList: ['green', 'blue', 'red'],
 }
 
-const createSite = createAsyncThunk('site/getSite', async (_, thunkAPI) => {
+/* const createSite = createAsyncThunk('site/getSite', async (_, thunkAPI) => {
 	try {
 		const res = await createSiteAPI()
 
 		return res
 	} catch (err) {
+		alert(err)
+		console.log(err)
 		return thunkAPI.rejectWithValue(err)
 	}
 })
 export const getSite = createAsyncThunk('site/getSite', async (_, thunkAPI) => {
 	try {
 		const { data } = await getSiteAPI()
+		console.log('getsite')
+		console.log(data)
 
 		return data
 	} catch (err) {
+		alert(err)
+		console.log(err)
 		return thunkAPI.rejectWithValue(err)
 	}
-})
+}) */
 
-const websiteSlice = createSlice({
-	name: 'site',
+const categorySlice = createSlice({
+	name: 'category',
 	initialState,
+	reducers: {
+		addCategory(state, action) {
+			state.categoryList = state.categoryList.push(action.payload)
+		},
+		deleteCategory(state, action) {
+			const index = state.categoryList.findIndex(action.payload)
+			if (index) {
+				state.categoryList.splice(index, index)
+			}
+		},
+	},
 
-	extraReducers: builder => {
+	/* extraReducers: builder => {
 		builder
 			.addCase(getSite.pending, state => {
 				state.status = 'loading'
@@ -47,9 +59,9 @@ const websiteSlice = createSlice({
 			.addCase(getSite.rejected, state => {
 				state.status = 'rejected'
 			})
-	},
+	}, */
 })
 
-export const getTitle = state => state.nameSite
+export const { addCategory, deleteCategory } = categorySlice.actions
 
-export default websiteSlice.reducer
+export default categorySlice.reducer

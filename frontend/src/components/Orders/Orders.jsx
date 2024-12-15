@@ -38,7 +38,7 @@ const Orders = () => {
 		<>
 			<section className={cabinetStyles.personalCabinet + ` container`}>
 				<Sidebar />
-				<Table data={dataTable} column={columns} styles={stylesTable} />
+				<Table data={dataTable} columns={columns} styles={stylesTable} />
 			</section>
 		</>
 	)
