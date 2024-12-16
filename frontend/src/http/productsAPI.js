@@ -43,9 +43,9 @@ export const editProductAPI = async data => {
 	return response
 }
 
-export const getProductsAPI = async nameWebsite => {
-	const response = await $host.get(
-		`api/product/get-active-by-alias?alias=${nameWebsite}`
+export const getProductsAPI = async () => {
+	const response = await $authHost.get(
+		`api/product/get-all`
 	)
 	return response
 }

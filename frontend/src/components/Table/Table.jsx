@@ -23,7 +23,7 @@ import { useDispatch } from 'react-redux'
 	)
 } */
 
-const Table = memo(({ data, columns, styles }) => {
+const Table = ({ data, columns, styles }) => {
 	/* const [listRow, setListRow] = useState(data)
 	const [searchTerm, setSearchTerm] = useState('')
 
@@ -100,7 +100,7 @@ const Table = memo(({ data, columns, styles }) => {
 			</table>
 		</section>
 	)
-})
+}
 
 const TableHeadItem = ({ item, styles }) => (
 	<th className={styles.table__header} key={item.id}>

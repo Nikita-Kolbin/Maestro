@@ -1,12 +1,18 @@
-import Analytics from "../components/Analytics/Analytics"
-import Auth from "../components/Auth/Auth"
-import Cabinet from "../components/Cabinet/Cabinet"
-import Clients from "../components/Clients/Clients"
-import MenuPage from "../components/MenuPage/MenuPage"
-import Orders from "../components/Orders/Orders"
-import PagesSite from "../components/PagesSite/PagesSite"
-import Products from "../components/Products/Products"
-import ThemePage from "../components/ThemePage/ThemePage"
+import Analytics from '../components/Analytics/Analytics'
+import Auth from '../components/Auth/Auth'
+import Cabinet from '../components/Cabinet/Cabinet'
+import Clients from '../components/Clients/Clients'
+import MenuPage from '../components/MenuPage/MenuPage'
+import Orders from '../components/Orders/Orders'
+import PagesSite from '../components/PagesSite/PagesSite'
+import Products from '../components/Products/Products'
+import ThemePage from '../components/ThemePage/ThemePage'
+import MySite from '../mySite/MySite'
+import { store } from '../redux/store'
+
+const getSiteName = () => {
+	return store.getState().site.nameSite
+}
 
 export const ROUTES = {
 	HOME: '/',
@@ -21,41 +27,42 @@ export const ROUTES = {
 	THEME: '/theme',
 	PAGESSITE: '/pages',
 	MENU: '/menu',
+	MYSITE: '/' + getSiteName(),
 }
 export const authRoutes = [
 	{
 		path: ROUTES.CABINET,
-		Component: Cabinet
+		Component: Cabinet,
 	},
-	
+
 	{
 		path: ROUTES.ORDERS,
-		Component: Orders
+		Component: Orders,
 	},
 	{
 		path: ROUTES.PRODUCTS,
-		Component: Products
+		Component: Products,
 	},
 	{
 		path: ROUTES.CLIENTS,
-		Component: Clients
+		Component: Clients,
 	},
 	{
 		path: ROUTES.ANALYTICS,
-		Component: Analytics
+		Component: Analytics,
 	},
 	{
 		path: ROUTES.THEME,
-		Component: ThemePage
+		Component: ThemePage,
 	},
 	{
 		path: ROUTES.PAGESSITE,
-		Component: PagesSite
+		Component: PagesSite,
 	},
 	{
 		path: ROUTES.MENU,
-		Component: MenuPage
-	}
+		Component: MenuPage,
+	},
 ]
 export const publicRoutes = [
 	{
@@ -67,8 +74,7 @@ export const publicRoutes = [
 		Component: Auth,
 	},
 	{
-		path: ROUTES.PRODUCTS + '/:id',
-		
+		path: ROUTES.MYSITE,
+		Component: MySite,
 	},
-	
 ]

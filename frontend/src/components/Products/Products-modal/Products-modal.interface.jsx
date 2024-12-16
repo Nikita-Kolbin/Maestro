@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux'
 import ProductsModal from './Products-modal'
 
 export const ProductsModalInterface = () => {
-	let value = useSelector(state => state.select.productsModal)
-    
+	const value = useSelector(state => state.select.productsModal)
 
 	switch (value) {
 		case 'Добавить товар':
-
 			return <ProductsModal active={true} />
 
 		case 'Удалить товары': {

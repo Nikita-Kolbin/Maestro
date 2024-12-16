@@ -32,7 +32,7 @@ export const registration = createAsyncThunk(
 )
 
 export const login = createAsyncThunk(
-	'user/login',
+	'admin/login',
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const { data } = await $host.post('api/admin/sign-in', {
@@ -49,7 +49,7 @@ export const login = createAsyncThunk(
 )
 
 const userSlice = createSlice({
-	name: 'user',
+	name: 'admin',
 	initialState,
 	reducers: {
 		/* setUser(state, action) {

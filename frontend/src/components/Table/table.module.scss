@@ -15,6 +15,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		padding-left: 20px; // table row hover background
 	}
 
 	&__headLeft,
@@ -76,7 +77,8 @@
 		font-size: 17px;
 		line-height: 24px;
 		font-weight: 700;
-		text-align: center;
+		padding-left: 20px; // table row hover background
+		text-align: start; // table row hover background
 	}
 
 	&__row {
@@ -84,7 +86,8 @@
 		height: 80px;
 		border: 1px solid black;
 		border-radius: var(--border-radius);
-		text-align: center;
+
+		text-align: start; // table row hover background
 
 		@include hover {
 			transition-duration: var(--transition-duration);
@@ -94,8 +97,11 @@
 
 	&__cell {
 		position: relative;
+		padding-left: 20px; // table row hover background
 		&:first-child {
-			&::before {
+			border-top-left-radius: var(--border-radius-large);
+			border-bottom-left-radius: var(--border-radius-large);
+			/* &::before {
 				position: absolute;
 				content: '';
 				left: -78px;
@@ -103,7 +109,7 @@
 				height: inherit;
 				border-top-left-radius: var(--border-radius-large);
 				border-bottom-left-radius: var(--border-radius-large);
-			}
+			} */
 		}
 		&:last-child {
 			border-top-right-radius: var(--border-radius-large);

@@ -11,7 +11,7 @@ const Select = ({ styles, name, id, optionArray = [], reducer }) => {
 		if (!!reducer) {
 			dispatch(reducer(value))
 		}
-	}, [])
+	}, [value])
 
 	return (
 		<select
@@ -19,6 +19,7 @@ const Select = ({ styles, name, id, optionArray = [], reducer }) => {
 				setValue(e.target.value)
 			}}
 			value={value}
+			defaultValue={optionArray[0]}
 			className={styles.select}
 			type='select'
 			name={name}

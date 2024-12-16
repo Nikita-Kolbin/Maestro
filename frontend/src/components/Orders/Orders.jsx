@@ -6,33 +6,38 @@ import Sidebar from '../Sidebar/Sidebar'
 import cabinetStyles from '../Cabinet/cabinet.module.scss'
 
 import stylesTable from '../Table/table.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { getOrders } from '../../redux/slices/ordersSlice'
 
 const Orders = () => {
-	const [dataTable, setDataTable] = useState([])
+	const dispatch = useDispatch()
+
+	const [dataTable, setDataTable] = useState()
+	const data = useSelector(state => state.orders.ordersList)
 
 	useEffect(() => {
-		axios('https://jsonplaceholder.typicode.com/users')
+		/* axios('https://jsonplaceholder.typicode.com/users')
 			.then(response => {
 				setDataTable(response.data)
 			})
-			.catch(error => console.log(`setDataTable`, error))
+			.catch(error => console.log(`setDataTable`, error)) */
+		dispatch(getOrders())
 	}, [])
+	useEffect(() => {
+		setDataTable(data)
+	}, [data])
 
 	const columns = [
-		{ heading: 'id', value: 'id' },
-		{ heading: 'Сумма', value: 'name' },
-		{ heading: 'Дата', value: 'username' },
-		{ heading: 'Клиент', value: 'phone' },
-		{ heading: 'Статус', value: 'website' },
+		{ heading: 'ID', value: 'id' },
+		{ heading: 'Сумма', value: 'total_sum' },
+		{ heading: 'Дата', value: 'date_time' },
+		{ heading: 'Клиент', value: 'customer_id' },
+		{ heading: 'Статус', value: 'status' },
 	]
 
-	/* const columns = [
-		{ heading: 'Id', value: 'id' },
-		{ heading: 'Сумма', value: 'summ' },
-		{ heading: 'Дата', value: 'date' },
-		{ heading: 'Клиент', value: 'client' },
-		{ heading: 'Статус', value: 'status' },
-	] */
+	console.log('dataTable');
+	console.log(dataTable);
+	
 
 	return (
 		<>
