@@ -10,12 +10,12 @@ INSERT INTO customers (website_alias, email, password_hash) VALUES
 INSERT INTO carts (id) VALUES (1), (2), (3);
 
 
-INSERT INTO products (website_alias, name, description, price, image_ids, active, tags) VALUES
-                     ('new_site', 'товар 1', 'описание товара 1', 100, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[]),
-                     ('new_site', 'товар 2', 'описание товара 2', 200, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[]),
-                     ('new_site', 'товар 3', 'описание товара 3', 300, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[]),
-                     ('new_site', 'товар 4', 'описание товара 4', 400, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[]),
-                     ('new_site', 'товар 5', 'описание товара 5', 500, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[]);
+INSERT INTO products (website_alias, name, description, price, image_ids, active, tags, count) VALUES
+                     ('new_site', 'товар 1', 'описание товара 1', 100, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[], 10),
+                     ('new_site', 'товар 2', 'описание товара 2', 200, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[], 20),
+                     ('new_site', 'товар 3', 'описание товара 3', 300, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[], 30),
+                     ('new_site', 'товар 4', 'описание товара 4', 400, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[], 40),
+                     ('new_site', 'товар 5', 'описание товара 5', 500, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[], 50);
 INSERT INTO saved_products (website_alias, name, description, price, image_ids, active, tags) VALUES
                            ('new_site', 'товар 1', 'описание товара 1', 100, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[]),
                            ('new_site', 'товар 2', 'описание товара 2', 200, ARRAY[]::BIGINT[], TRUE, ARRAY[]::TEXT[]),

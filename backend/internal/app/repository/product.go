@@ -13,9 +13,9 @@ import (
 func (r *Repository) CreateProduct(ctx context.Context, product *model.Product) (*model.Product, error) {
 	query := `
 	INSERT INTO products
-    (website_alias, name, description, price, image_ids, active, tags) 
-	VALUES ($1, $2, $3, $4, $5, $6, $7)
-    RETURNING id, website_alias, name, description, price, image_ids, active, tags`
+    (website_alias, name, description, price, image_ids, active, tags, count) 
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    RETURNING id, website_alias, name, description, price, image_ids, active, tags, count`
 
 	row := r.conn.QueryRowContext(
 		ctx, query,
@@ -26,6 +26,7 @@ func (r *Repository) CreateProduct(ctx context.Context, product *model.Product) 
 		pq.Array(product.ImageIds),
 		product.Active,
 		pq.Array(product.Tags),
+		product.Count,
 	)
 
 	created := &model.Product{}
@@ -39,6 +40,7 @@ func (r *Repository) CreateProduct(ctx context.Context, product *model.Product) 
 		pq.Array(&created.ImageIds),
 		&created.Active,
 		pq.Array(&created.Tags),
+		&created.Count,
 	); err != nil {
 		return nil, err
 	}
@@ -54,9 +56,10 @@ func (r *Repository) UpdateProduct(ctx context.Context, product *model.Product) 
 	    price = $3,
 	    image_ids = $4,
 	    active = $5, 
-	    tags = $6
-	WHERE id = $7
-    RETURNING id, website_alias, name, description, price, image_ids, active, tags`
+	    tags = $6,
+		count = $7
+	WHERE id = $8
+    RETURNING id, website_alias, name, description, price, image_ids, active, tags, count`
 
 	row := r.conn.QueryRowContext(
 		ctx, query,
@@ -66,6 +69,7 @@ func (r *Repository) UpdateProduct(ctx context.Context, product *model.Product) 
 		pq.Array(product.ImageIds),
 		product.Active,
 		pq.Array(product.Tags),
+		product.Count,
 		product.Id,
 	)
 
@@ -80,6 +84,7 @@ func (r *Repository) UpdateProduct(ctx context.Context, product *model.Product) 
 		pq.Array(&updated.ImageIds),
 		&updated.Active,
 		pq.Array(&updated.Tags),
+		&updated.Count,
 	); err != nil {
 		return nil, err
 	}
@@ -89,7 +94,7 @@ func (r *Repository) UpdateProduct(ctx context.Context, product *model.Product) 
 
 func (r *Repository) GetProductById(ctx context.Context, id int) (*model.Product, error) {
 	query := `
-	SELECT id, website_alias, name, description, price, image_ids, active, tags 
+	SELECT id, website_alias, name, description, price, image_ids, active, tags, count
 	FROM products WHERE id = $1`
 
 	row := r.conn.QueryRowContext(ctx, query, id)
@@ -104,6 +109,7 @@ func (r *Repository) GetProductById(ctx context.Context, id int) (*model.Product
 		pq.Array(&product.ImageIds),
 		&product.Active,
 		pq.Array(&product.Tags),
+		&product.Count,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, model.ErrNotFound
@@ -116,7 +122,7 @@ func (r *Repository) GetProductById(ctx context.Context, id int) (*model.Product
 
 func (r *Repository) GetActiveProductsByAlias(ctx context.Context, alias string) (model.ProductList, error) {
 	query := `
-	SELECT id, website_alias, name, description, price, image_ids, active, tags 
+	SELECT id, website_alias, name, description, price, image_ids, active, tags, count
 	FROM products WHERE website_alias = $1 AND active
 	ORDER BY id`
 
@@ -132,7 +138,7 @@ func (r *Repository) GetActiveProductsByAlias(ctx context.Context, alias string)
 	for rows.Next() {
 		product := &model.Product{}
 		if err = rows.Scan(&product.Id, &product.WebsiteAlias, &product.Name, &product.Description, &product.Price,
-			pq.Array(&product.ImageIds), &product.Active, pq.Array(&product.Tags)); err != nil {
+			pq.Array(&product.ImageIds), &product.Active, pq.Array(&product.Tags), &product.Count); err != nil {
 			return nil, err
 		}
 		products = append(products, product)
@@ -143,7 +149,7 @@ func (r *Repository) GetActiveProductsByAlias(ctx context.Context, alias string)
 
 func (r *Repository) GetAllProductsByAlias(ctx context.Context, alias string) (model.ProductList, error) {
 	query := `
-	SELECT id, website_alias, name, description, price, image_ids, active, tags 
+	SELECT id, website_alias, name, description, price, image_ids, active, tags, count
 	FROM products WHERE website_alias = $1
 	ORDER BY id`
 
@@ -159,7 +165,7 @@ func (r *Repository) GetAllProductsByAlias(ctx context.Context, alias string) (m
 	for rows.Next() {
 		product := &model.Product{}
 		if err = rows.Scan(&product.Id, &product.WebsiteAlias, &product.Name, &product.Description, &product.Price,
-			pq.Array(&product.ImageIds), &product.Active, pq.Array(&product.Tags)); err != nil {
+			pq.Array(&product.ImageIds), &product.Active, pq.Array(&product.Tags), &product.Count); err != nil {
 			return nil, err
 		}
 		products = append(products, product)

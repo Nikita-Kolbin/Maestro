@@ -44,3 +44,50 @@ func (r *Repository) GetAdminByEmailPassword(ctx context.Context, email, passwor
 
 	return admin, nil
 }
+
+func (r *Repository) GetAdminById(ctx context.Context, id int) (*model.Admin, error) {
+	query := `
+	SELECT id, email, first_name, last_name, father_name, city, 
+       telegram, image_id, email_notification, telegram_notification
+	FROM admins WHERE id = $1`
+
+	admin := &model.Admin{}
+
+	err := r.conn.GetContext(ctx, admin, query, id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return admin, nil
+}
+
+func (r *Repository) UpdateAdminProfile(ctx context.Context, a *model.Admin) (*model.Admin, error) {
+	query := `
+	UPDATE admins 
+	SET first_name=$1, 
+	    last_name=$2, 
+	    father_name=$3,
+	    city=$4,
+	    image_id=$5,
+	    telegram=$6,
+	    email_notification=$7,
+	    telegram_notification=$8
+	WHERE id=$9
+	RETURNING id, email, first_name, last_name, father_name, city, 
+       telegram, image_id, email_notification, telegram_notification`
+
+	admin := &model.Admin{}
+
+	err := r.conn.GetContext(
+		ctx, admin, query,
+		a.FirstName, a.LastName, a.FatherName,
+		a.City, a.ImageId, a.Telegram,
+		a.EmailNotification, a.TelegramNotification, a.Id,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return admin, nil
+}
