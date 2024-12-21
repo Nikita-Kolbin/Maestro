@@ -10,6 +10,8 @@ import (
 type repository interface {
 	CreateAdmin(ctx context.Context, email, password string) (int, error)
 	GetAdminByEmailPassword(ctx context.Context, email, passwordHash string) (*model.Admin, error)
+	GetAdminById(ctx context.Context, id int) (*model.Admin, error)
+	UpdateAdminProfile(ctx context.Context, a *model.Admin) (*model.Admin, error)
 
 	CreateWebsite(ctx context.Context, alias string, adminId int) (*model.Website, error)
 	GetWebsiteByAlias(ctx context.Context, alias string) (*model.Website, error)
@@ -20,6 +22,9 @@ type repository interface {
 
 	CreateCustomer(ctx context.Context, alias, email, passwordHash string) (int, error)
 	GetCustomerByEmailPassword(ctx context.Context, alias, email, passwordHash string) (*model.Customer, error)
+	GetCustomerById(ctx context.Context, id int) (*model.Customer, error)
+	GetCustomersByWebsite(ctx context.Context, alias string) ([]*model.Customer, error)
+	UpdateCustomerProfile(ctx context.Context, c *model.Customer) (*model.Customer, error)
 
 	CreateProduct(ctx context.Context, product *model.Product) (*model.Product, error)
 	GetProductById(ctx context.Context, id int) (*model.Product, error)

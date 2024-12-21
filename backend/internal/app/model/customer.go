@@ -39,3 +39,54 @@ type CustomerDTO struct {
 	TelegramNotification bool   `json:"telegram_notification"`
 	EmailNotification    bool   `json:"email_notification"`
 }
+
+type UpdateCustomerProfileRequest struct {
+	FirstName            string `json:"first_name"`
+	LastName             string `json:"last_name"`
+	FatherName           string `json:"father_name"`
+	Phone                string `json:"phone"`
+	Telegram             string `json:"telegram"`
+	DeliveryType         string `json:"delivery_type"`
+	PaymentType          string `json:"payment_type"`
+	TelegramNotification bool   `json:"telegram_notification"`
+	EmailNotification    bool   `json:"email_notification"`
+}
+
+func FromCustomerToDTO(customer *Customer) *CustomerDTO {
+	return &CustomerDTO{
+		Id:                   customer.Id,
+		WebsiteAlias:         customer.WebsiteAlias,
+		Email:                customer.Email,
+		FirstName:            customer.FirstName,
+		LastName:             customer.LastName,
+		FatherName:           customer.FatherName,
+		Phone:                customer.Phone,
+		Telegram:             customer.Telegram,
+		DeliveryType:         customer.DeliveryType,
+		PaymentType:          customer.PaymentType,
+		TelegramNotification: customer.TelegramNotification,
+		EmailNotification:    customer.EmailNotification,
+	}
+}
+
+func FromCustomersToDTO(customers []*Customer) []*CustomerDTO {
+	resp := make([]*CustomerDTO, 0, len(customers))
+	for _, customer := range customers {
+		resp = append(resp, FromCustomerToDTO(customer))
+	}
+	return resp
+}
+
+func FromUpdateProfileRequestToCustomer(req *UpdateCustomerProfileRequest) *Customer {
+	return &Customer{
+		FirstName:            req.FirstName,
+		LastName:             req.LastName,
+		FatherName:           req.FatherName,
+		Phone:                req.Phone,
+		Telegram:             req.Telegram,
+		DeliveryType:         req.DeliveryType,
+		PaymentType:          req.PaymentType,
+		EmailNotification:    req.EmailNotification,
+		TelegramNotification: req.TelegramNotification,
+	}
+}

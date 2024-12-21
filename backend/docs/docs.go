@@ -15,6 +15,51 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/get-my-profile": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Get my profile for admin",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.AdminDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/sign-in": {
             "post": {
                 "consumes": [
@@ -98,6 +143,62 @@ const docTemplate = `{
                     },
                     "409": {
                         "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/update-profile": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Update admin profile",
+                "parameters": [
+                    {
+                        "description": "admin new profile info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateAdminProfileRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.AdminDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
                         "schema": {
                             "$ref": "#/definitions/model.ErrorResponse"
                         }
@@ -212,6 +313,105 @@ const docTemplate = `{
                 }
             }
         },
+        "/customer/get-all": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Get all customers in website TO ADMIN",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.CustomerDTO"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/get-my-profile": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Get my profile to customer",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.CustomerDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/customer/sign-in": {
             "post": {
                 "consumes": [
@@ -295,6 +495,62 @@ const docTemplate = `{
                     },
                     "409": {
                         "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/update-profile": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Update customer profile",
+                "parameters": [
+                    {
+                        "description": "customer new profile info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateCustomerProfileRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.CustomerDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
                         "schema": {
                             "$ref": "#/definitions/model.ErrorResponse"
                         }
@@ -992,6 +1248,41 @@ const docTemplate = `{
                 }
             }
         },
+        "model.AdminDTO": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "email_notification": {
+                    "type": "boolean"
+                },
+                "father_name": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image_id": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "telegram": {
+                    "type": "string"
+                },
+                "telegram_notification": {
+                    "type": "boolean"
+                }
+            }
+        },
         "model.AdminEmailPasswordRequest": {
             "type": "object",
             "properties": {
@@ -1030,6 +1321,9 @@ const docTemplate = `{
             "properties": {
                 "active": {
                     "type": "boolean"
+                },
+                "count": {
+                    "type": "integer"
                 },
                 "description": {
                     "type": "string"
@@ -1075,6 +1369,47 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.CustomerDTO": {
+            "type": "object",
+            "properties": {
+                "delivery_type": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "email_notification": {
+                    "type": "boolean"
+                },
+                "father_name": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "payment_type": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "telegram": {
+                    "type": "string"
+                },
+                "telegram_notification": {
+                    "type": "boolean"
+                },
+                "website_alias": {
                     "type": "string"
                 }
             }
@@ -1140,6 +1475,9 @@ const docTemplate = `{
             "properties": {
                 "active": {
                     "type": "boolean"
+                },
+                "count": {
+                    "type": "integer"
                 },
                 "description": {
                     "type": "string"
@@ -1218,11 +1556,75 @@ const docTemplate = `{
                 }
             }
         },
+        "model.UpdateAdminProfileRequest": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "email_notification": {
+                    "type": "boolean"
+                },
+                "father_name": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "image_id": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "telegram": {
+                    "type": "string"
+                },
+                "telegram_notification": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "model.UpdateCustomerProfileRequest": {
+            "type": "object",
+            "properties": {
+                "delivery_type": {
+                    "type": "string"
+                },
+                "email_notification": {
+                    "type": "boolean"
+                },
+                "father_name": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "payment_type": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "telegram": {
+                    "type": "string"
+                },
+                "telegram_notification": {
+                    "type": "boolean"
+                }
+            }
+        },
         "model.UpdateProductRequest": {
             "type": "object",
             "properties": {
                 "active": {
                     "type": "boolean"
+                },
+                "count": {
+                    "type": "integer"
                 },
                 "description": {
                     "type": "string"

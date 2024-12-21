@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS admins (
     father_name           TEXT NOT NULL DEFAULT '',
     city                  TEXT NOT NULL DEFAULT '',
     telegram              TEXT NOT NULL DEFAULT '',
-    image_id              BIGINT NOT NULL DEFAULT 0,
+    image_id              TEXT NOT NULL DEFAULT 0,
 
     email_notification    BOOLEAN NOT NULL DEFAULT false,
     telegram_notification BOOLEAN NOT NULL DEFAULT false
@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS products (
     image_ids      TEXT[]    NOT NULL,
     active         BOOLEAN   NOT NULL,
     tags           TEXT[]    NOT NULL,
+    count          INTEGER   NOT NULL,
 
     FOREIGN KEY (website_alias) REFERENCES websites (alias)
 );

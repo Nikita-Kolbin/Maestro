@@ -9,6 +9,7 @@ type Product struct {
 	ImageIds     []string `db:"image_ids"`
 	Active       bool     `db:"active"`
 	Tags         []string `db:"tags"`
+	Count        int      `db:"count"`
 }
 
 type ProductList []*Product
@@ -22,6 +23,7 @@ type ProductDTO struct {
 	ImageIds     []string `json:"image_ids"`
 	Active       bool     `json:"active"`
 	Tags         []string `json:"tags"`
+	Count        int      `json:"count"`
 }
 
 type ProductDTOList []*ProductDTO
@@ -34,6 +36,7 @@ type CreateProductRequest struct {
 	ImageIds     []string `json:"image_ids"`
 	Active       bool     `json:"active"`
 	Tags         []string `json:"tags"`
+	Count        int      `json:"count"`
 }
 
 type UpdateProductRequest struct {
@@ -44,6 +47,7 @@ type UpdateProductRequest struct {
 	ImageIds    []string `json:"image_ids"`
 	Active      bool     `json:"active"`
 	Tags        []string `json:"tags"`
+	Count       int      `json:"count"`
 }
 
 func FromCreateRequestToProduct(req *CreateProductRequest) *Product {
@@ -55,6 +59,7 @@ func FromCreateRequestToProduct(req *CreateProductRequest) *Product {
 		ImageIds:     req.ImageIds,
 		Active:       req.Active,
 		Tags:         req.Tags,
+		Count:        req.Count,
 	}
 }
 
@@ -67,6 +72,7 @@ func FromUpdateRequestToProduct(req *UpdateProductRequest) *Product {
 		ImageIds:    req.ImageIds,
 		Active:      req.Active,
 		Tags:        req.Tags,
+		Count:       req.Count,
 	}
 }
 
@@ -80,6 +86,7 @@ func FromProductToDTO(product *Product) *ProductDTO {
 		ImageIds:     product.ImageIds,
 		Active:       product.Active,
 		Tags:         product.Tags,
+		Count:        product.Count,
 	}
 }
 
