@@ -129,3 +129,17 @@ func (r *Repository) CreateSections(ctx context.Context, websiteAlias string, se
 
 	return nil
 }
+
+func (r *Repository) DeleteWebsiteByAdmin(ctx context.Context, adminId int) error {
+	query := `DELETE FROM websites WHERE admin_id = $1`
+
+	res, err := r.conn.ExecContext(ctx, query, adminId)
+	if err != nil {
+		return err
+	}
+	if n, _ := res.RowsAffected(); n == 0 {
+		return model.ErrNotFound
+	}
+
+	return nil
+}

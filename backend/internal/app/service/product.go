@@ -25,3 +25,7 @@ func (s *Service) GetActiveProductsByAlias(ctx context.Context, alias string) (m
 func (s *Service) GetAllProductsByAlias(ctx context.Context, alias string) (model.ProductList, error) {
 	return s.repo.GetAllProductsByAlias(ctx, alias)
 }
+
+func (s *Service) DeleteProduct(ctx context.Context, id int) error {
+	return s.repo.DeleteProduct(ctx, id)
+}

@@ -14,6 +14,7 @@ type Service interface {
 	UpdateProduct(ctx context.Context, product *model.Product) (*model.Product, error)
 	GetProductById(ctx context.Context, id int) (*model.Product, error)
 	GetWebsiteByAdminId(ctx context.Context, adminId int) (*model.Website, error)
+	DeleteProduct(ctx context.Context, id int) error
 }
 
 type Product struct {

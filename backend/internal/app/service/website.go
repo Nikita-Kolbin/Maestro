@@ -42,3 +42,7 @@ func (s *Service) SetWebsiteStyle(
 func (s *Service) GetWebsiteStyle(ctx context.Context, websiteAlias string) ([]*model.Section, error) {
 	return s.repo.GetSectionsByWebsiteAlias(ctx, websiteAlias)
 }
+
+func (s *Service) DeleteWebsiteByAdmin(ctx context.Context, adminId int) error {
+	return s.repo.DeleteWebsiteByAdmin(ctx, adminId)
+}

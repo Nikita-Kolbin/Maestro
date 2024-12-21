@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS sections (
     text          TEXT NOT NULL,
     image_id      TEXT NOT NULL,
 
-    FOREIGN KEY (website_alias) REFERENCES websites (alias)
+    FOREIGN KEY (website_alias) REFERENCES websites (alias) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS customers (
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS customers (
     telegram_notification BOOLEAN NOT NULL DEFAULT false,
 
     UNIQUE (website_alias, email),
-    FOREIGN KEY (website_alias) REFERENCES websites (alias)
+    FOREIGN KEY (website_alias) REFERENCES websites (alias) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -65,13 +65,13 @@ CREATE TABLE IF NOT EXISTS products (
     tags           TEXT[]    NOT NULL,
     count          INTEGER   NOT NULL,
 
-    FOREIGN KEY (website_alias) REFERENCES websites (alias)
+    FOREIGN KEY (website_alias) REFERENCES websites (alias) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS carts (
     id BIGINT PRIMARY KEY,
 
-    FOREIGN KEY (id) REFERENCES customers (id)
+    FOREIGN KEY (id) REFERENCES customers (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS cart_items (
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS cart_items (
 
     UNIQUE (cart_id, product_id),
 
-    FOREIGN KEY (cart_id) REFERENCES carts (id),
+    FOREIGN KEY (cart_id) REFERENCES carts (id) ON DELETE CASCADE ,
     FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
 );
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS saved_products (
     active         BOOLEAN   NOT NULL,
     tags           TEXT[]    NOT NULL,
 
-    FOREIGN KEY (website_alias) REFERENCES websites (alias)
+    FOREIGN KEY (website_alias) REFERENCES websites (alias) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS orders (
     status      SMALLINT  NOT NULL,
     comment     TEXT      NOT NULL,
 
-    FOREIGN KEY (customer_id) REFERENCES customers (id)
+    FOREIGN KEY (customer_id) REFERENCES customers (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS order_items (
@@ -116,6 +116,6 @@ CREATE TABLE IF NOT EXISTS order_items (
     saved_product_id BIGINT    NOT NULL,
     count            INTEGER   NOT NULL ,
 
-    FOREIGN KEY (order_id) REFERENCES orders (id),
-    FOREIGN KEY (saved_product_id) REFERENCES saved_products (id)
+    FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE ,
+    FOREIGN KEY (saved_product_id) REFERENCES saved_products (id) ON DELETE CASCADE
 );

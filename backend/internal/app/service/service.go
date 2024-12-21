@@ -19,6 +19,7 @@ type repository interface {
 	AdminHaveWebsite(ctx context.Context, adminId int) (bool, error)
 	CreateSections(ctx context.Context, websiteAlias string, sections []*model.Section) error
 	GetSectionsByWebsiteAlias(ctx context.Context, websiteAlias string) ([]*model.Section, error)
+	DeleteWebsiteByAdmin(ctx context.Context, adminId int) error
 
 	CreateCustomer(ctx context.Context, alias, email, passwordHash string) (int, error)
 	GetCustomerByEmailPassword(ctx context.Context, alias, email, passwordHash string) (*model.Customer, error)
@@ -31,6 +32,7 @@ type repository interface {
 	UpdateProduct(ctx context.Context, product *model.Product) (*model.Product, error)
 	GetActiveProductsByAlias(ctx context.Context, alias string) (model.ProductList, error)
 	GetAllProductsByAlias(ctx context.Context, alias string) (model.ProductList, error)
+	DeleteProduct(ctx context.Context, id int) error
 
 	UpsertCartItem(ctx context.Context, cartId, productId, count int) error
 	GetCart(ctx context.Context, id int) (*model.Cart, error)
