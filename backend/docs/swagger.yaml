@@ -291,6 +291,16 @@ definitions:
           $ref: '#/definitions/model.SectionDTO'
         type: array
     type: object
+  product.SuccessResp:
+    properties:
+      success:
+        type: boolean
+    type: object
+  website.SuccessResp:
+    properties:
+      success:
+        type: boolean
+    type: object
 host: localhost:8082
 info:
   contact: {}
@@ -836,6 +846,44 @@ paths:
       summary: Create product
       tags:
       - product
+  /product/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: product id to delete
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/product.SuccessResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update product
+      tags:
+      - product
   /product/get-active-by-alias:
     get:
       consumes:
@@ -972,6 +1020,34 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create website
+      tags:
+      - website
+  /website/delete-my-website:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/website.SuccessResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete my website
       tags:
       - website
   /website/get-my-website:

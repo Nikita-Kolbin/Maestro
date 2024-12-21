@@ -120,6 +120,20 @@ func (r *Repository) GetProductById(ctx context.Context, id int) (*model.Product
 	return product, nil
 }
 
+func (r *Repository) DeleteProduct(ctx context.Context, id int) error {
+	query := `DELETE FROM products WHERE id = $1`
+
+	res, err := r.conn.ExecContext(ctx, query, id)
+	if err != nil {
+		return err
+	}
+	if n, _ := res.RowsAffected(); n == 0 {
+		return model.ErrNotFound
+	}
+
+	return nil
+}
+
 func (r *Repository) GetActiveProductsByAlias(ctx context.Context, alias string) (model.ProductList, error) {
 	query := `
 	SELECT id, website_alias, name, description, price, image_ids, active, tags, count

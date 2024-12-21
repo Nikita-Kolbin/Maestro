@@ -11,6 +11,7 @@ type Service interface {
 	SetWebsiteStyle(ctx context.Context, websiteAlias string, sections []*model.Section) ([]*model.Section, error)
 	GetWebsiteByAlias(ctx context.Context, alias string) (*model.Website, error)
 	GetWebsiteStyle(ctx context.Context, websiteAlias string) ([]*model.Section, error)
+	DeleteWebsiteByAdmin(ctx context.Context, adminId int) error
 }
 
 type Website struct {
