@@ -15,6 +15,7 @@ import { getSite } from '../../redux/slices/websiteSlice'
 
 const Cabinet = () => {
 	const [isEditPage, setToggleEdit] = useState(false)
+	const [nameSite, setNameSite] = useState('')
 
 	const email = useSelector(state => state.user.email)
 	const phone = useSelector(state => state.user.phone)
@@ -26,13 +27,12 @@ const Cabinet = () => {
 
 	const dispatch = useDispatch()
 
-	const siteNameRand = useId() + Math.random() //for test!!!
-
 	const createSite = () => {
-		createSiteAPI(siteNameRand)
+		createSiteAPI(nameSite)
 			.then((name, id) => console.log(name, id))
+			.then(() => dispatch(getSite()))
 			.catch(er => console.log(er))
-		dispatch(getSite())
+		
 	}
 
 	return (
@@ -48,8 +48,8 @@ const Cabinet = () => {
 							colorBack={'var(--color-light)'}
 							buttonText={'Редактировать'}
 							width={'143px'}
-							height={'36px'}
-						></Button>
+							height={'36px'} // todo button change password
+						/>
 					</div>
 					<form className={styles.cabinet__inputList}>
 						<Input
@@ -121,16 +121,25 @@ const Cabinet = () => {
 							</ul>
 						</label>
 					</form>
-					<div>
+					<div className={styles.cabinet__createSite}>
 						<h2 className={styles.cabinet__title}>Мой сайт</h2>
-						<Button
-							className={styles.cabinet__buttonEdit}
-							onClick={() => createSite()}
-							colorBack={'var(--color-light)'}
-							buttonText={'Создать сайт'}
-							width={'143px'}
-							height={'36px'}
-						></Button>
+						<div className={styles.cabinet__createSiteActions}>
+							<Button
+								className={styles.cabinet__buttonEdit}
+								onClick={() => createSite()}
+								colorBack={'var(--color-light)'}
+								buttonText={'Создать сайт'}
+								width={'143px'}
+								height={'36px'}
+							></Button>
+							<input
+								className={styles.cabinet__input}
+								type='text'
+								value={nameSite}
+								onChange={e => setNameSite(e.target.value)}
+								placeholder='Название сайта'
+							/>{' '}
+						</div>
 					</div>
 					<div className={styles.cabinet__notification}>
 						<h2 className={styles.cabinet__title}>Контактная информация</h2>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 
 import Table from '../Table/Table'
 import Sidebar from '../Sidebar/Sidebar'
@@ -16,13 +15,9 @@ const Orders = () => {
 	const data = useSelector(state => state.orders.ordersList)
 
 	useEffect(() => {
-		/* axios('https://jsonplaceholder.typicode.com/users')
-			.then(response => {
-				setDataTable(response.data)
-			})
-			.catch(error => console.log(`setDataTable`, error)) */
 		dispatch(getOrders())
 	}, [])
+
 	useEffect(() => {
 		setDataTable(data)
 	}, [data])
@@ -34,11 +29,7 @@ const Orders = () => {
 		{ heading: 'Клиент', value: 'customer_id' },
 		{ heading: 'Статус', value: 'status' },
 	]
-
-	console.log('dataTable');
-	console.log(dataTable);
 	
-
 	return (
 		<>
 			<section className={cabinetStyles.personalCabinet + ` container`}>

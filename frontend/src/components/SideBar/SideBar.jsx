@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { ROUTES } from '../../utils/routes'
+import { ROUTES, ROUTESITE } from '../../utils/routes'
 
 import styles from './sidebar.module.scss'
 import stylesNav from './nav.module.scss'
@@ -37,6 +37,13 @@ const Sidebar = () => {
 						</NavLink>
 					</li>
 					<h2 className={stylesNav.nav__title}>Редактор сайта</h2>
+
+					<li className={stylesNav.nav__item}>
+						<NavLink className={stylesNav.nav__link} to={ROUTESITE.MYSITE}>
+							Мой сайт
+						</NavLink>
+					</li>
+
 					<li className={stylesNav.nav__item}>
 						<NavLink className={stylesNav.nav__link} to={ROUTES.THEME}>
 							Темы

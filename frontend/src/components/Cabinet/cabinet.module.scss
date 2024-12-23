@@ -71,6 +71,18 @@
 		width: auto;
 	}
 
+	&__createSiteActions {
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		column-gap: 24px;
+		font-size: 13px;
+		width: 50%;
+		padding-bottom: 32px;
+		margin-bottom: 32px;
+		border-bottom: var(--color-gray-border) 1px solid;
+	}
+
 	&__notification {
 		width: 100%;
 	}

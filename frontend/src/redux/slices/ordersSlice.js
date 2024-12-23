@@ -7,11 +7,10 @@ const initialState = {
 }
 
 export const getOrders = createAsyncThunk(
-	'product/getOrders',
+	'orders/getOrders',
 	async (_, thunkAPI) => {
 		try {
 			const { data } = await getOrdersAPI()
-
 			return data
 		} catch (err) {
 			return thunkAPI.rejectWithValue(err)

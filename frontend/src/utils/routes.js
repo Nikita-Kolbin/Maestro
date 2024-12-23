@@ -8,27 +8,28 @@ import PagesSite from '../components/PagesSite/PagesSite'
 import Products from '../components/Products/Products'
 import ThemePage from '../components/ThemePage/ThemePage'
 import MySite from '../mySite/MySite'
-import { store } from '../redux/store'
 
-const getSiteName = () => {
-	return store.getState().site.nameSite
-}
+const nameSite = localStorage.getItem('nameSite')
 
 export const ROUTES = {
 	HOME: '/',
-	SIGNUP: '/sign-up',
-	SIGNIN: '/sign-in',
-	CABINET: '/cabinet',
-	CABINETEDIT: '/cabinet-edit',
-	ORDERS: '/orders',
-	PRODUCTS: '/products',
-	CLIENTS: '/clients',
-	ANALYTICS: '/analytics',
-	THEME: '/theme',
-	PAGESSITE: '/pages',
-	MENU: '/menu',
-	MYSITE: '/' + getSiteName(),
+	SIGNUP: '/admin/sign-up',
+	SIGNIN: '/admin/sign-in',
+	CABINET: '/admin/cabinet',
+	CABINETEDIT: '/admin/cabinet-edit',
+	ORDERS: '/admin/orders',
+	PRODUCTS: '/admin/products',
+	CLIENTS: '/admin/clients',
+	ANALYTICS: '/admin/analytics',
+	THEME: '/admin/theme',
+	PAGESSITE: '/admin/pages',
+	MENU: '/admin/menu',
 }
+
+export const ROUTESITE = {
+	...(nameSite ? { MYSITE: `/site/${nameSite}` } : {}),
+}
+
 export const authRoutes = [
 	{
 		path: ROUTES.CABINET,
@@ -74,7 +75,7 @@ export const publicRoutes = [
 		Component: Auth,
 	},
 	{
-		path: ROUTES.MYSITE,
+		path: ROUTESITE.MYSITE,
 		Component: MySite,
 	},
 ]

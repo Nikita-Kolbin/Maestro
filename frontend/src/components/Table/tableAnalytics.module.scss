@@ -14,6 +14,10 @@
 		-webkit-border-vertical-spacing: 0;
 	}
 
+	&__head {
+		max-width: 50%;
+	}
+
 	&__header {
 		font-size: 13px;
 		line-height: 16px;
@@ -32,6 +36,18 @@
 		&:nth-child(3) {
 			width: 10%;
 		}
+	}
+
+	&__search,
+	& select {
+		padding: 6px 8px 6px 16px;
+		color: var(--color-gray-text);
+		min-width: 50%;
+		height: 36px;
+		border: 2px solid var(--color-gray-back);
+		border-radius: var(--border-radius);
+		line-height: 15px;
+		font-size: 15px;
 	}
 
 	&__row {

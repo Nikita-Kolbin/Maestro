@@ -42,7 +42,7 @@ const Table = ({ data, columns, styles }) => {
 	console.log(data) */
 
 	useEffect(() => {
-		if (location.pathname === '/products') {
+		if (location.pathname === '/admin/products') {
 			setProductsPage(true)
 		} else {
 			setProductsPage(false)

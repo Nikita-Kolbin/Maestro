@@ -1,0 +1,47 @@
+.componentsModal {
+	position: relative;
+	transition-duration: var(--transition-duration);
+
+	&__dialog {
+		position: absolute;
+		width: 366px;
+		height: auto;
+		top: -40px;
+		left: -40px;
+		margin: 0;
+		box-shadow: var(--shadow-default);
+		transition-duration: var(--transition-duration);
+	}
+
+	&__wrapper {
+		padding: 24px 10px;
+	}
+
+	&__componentsList {
+		display: flex;
+		flex-direction: column;
+		row-gap: 24px;
+		max-height: calc(100vh - 200px);
+
+		overflow-y: auto;
+	}
+
+	&__componentItem {
+		display: flex;
+		flex-direction: column;
+		row-gap: 4px;
+		cursor: grab;
+	}
+
+	&__componentTitle {
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 20px;
+	}
+
+	&__componentImg {
+		width: 348px;
+		user-select: none;
+		filter: drop-shadow(var(--shadow-default));
+	}
+}
