@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"io"
+	"time"
 
 	"github.com/Nikita-Kolbin/Maestro/internal/app/model"
 )
@@ -48,16 +49,23 @@ type objectStorage interface {
 	GetObject(ctx context.Context, objectId, bucketName string) (io.Reader, string, error)
 }
 
+type cache interface {
+	Set(ctx context.Context, prefix, key, val string, exp time.Duration) error
+	Get(ctx context.Context, prefix, key string) (string, error)
+}
+
 type Service struct {
 	jwtSecret string
 	repo      repository
 	storage   objectStorage
+	cache     cache
 }
 
-func New(repo repository, storage objectStorage, jwtSecret string) *Service {
+func New(repo repository, storage objectStorage, cache cache, jwtSecret string) *Service {
 	return &Service{
 		jwtSecret: jwtSecret,
 		repo:      repo,
 		storage:   storage,
+		cache:     cache,
 	}
 }
