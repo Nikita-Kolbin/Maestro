@@ -10,6 +10,7 @@ import (
 	"github.com/Nikita-Kolbin/Maestro/internal/pkg/httpserver"
 	"github.com/Nikita-Kolbin/Maestro/internal/pkg/logger"
 	"github.com/Nikita-Kolbin/Maestro/internal/pkg/minioclient"
+	"github.com/Nikita-Kolbin/Maestro/internal/pkg/redisclient"
 )
 
 func Run(ctx context.Context) error {
@@ -29,7 +30,13 @@ func Run(ctx context.Context) error {
 		return fmt.Errorf("init storage failed: %w", err)
 	}
 
-	srv := service.New(repo, stg, cfg.JWTSecret)
+	cache, err := redisclient.NewClient(ctx, cfg.Redis.HostPort, cfg.Redis.Password)
+	if err != nil {
+		return fmt.Errorf("init cache failed: %w", err)
+	}
+	defer cache.Close()
+
+	srv := service.New(repo, stg, cache, cfg.JWTSecret)
 
 	r := router.New(ctx, srv, cfg.Listener.GetHostPort())
 

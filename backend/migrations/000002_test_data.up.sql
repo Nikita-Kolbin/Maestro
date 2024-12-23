@@ -3,6 +3,11 @@ INSERT INTO admins (email, password_hash) VALUES ('admin@mail.ru', '7c222fb2927d
 
 INSERT INTO websites (admin_id, alias, active) VALUES (1, 'new_site', TRUE);
 
+INSERT INTO sections (id, website_alias, style_id, text, image_id) VALUES
+                     (1, 'new_site', 1, 'текст блока 1', 'image_uuid_1'),
+                     (2, 'new_site', 2, 'текст блока 2', 'image_uuid_2'),
+                     (3, 'new_site', 3, 'текст блока 3', 'image_uuid_3');
+
 INSERT INTO customers (website_alias, email, password_hash) VALUES
                       ('new_site', 'customer1@mail.ru', '7c222fb2927d828af22f592134e8932480637c0d'),
                       ('new_site', 'customer2@mail.ru', '7c222fb2927d828af22f592134e8932480637c0d'),

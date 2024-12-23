@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"github.com/Nikita-Kolbin/Maestro/internal/app/model"
+	"github.com/Nikita-Kolbin/Maestro/internal/pkg/logger"
 )
 
 func (s *Service) CreateWebsite(ctx context.Context, alias string, adminId int) (*model.Website, error) {
@@ -36,10 +37,39 @@ func (s *Service) SetWebsiteStyle(
 		return nil, err
 	}
 
-	return s.repo.GetSectionsByWebsiteAlias(ctx, websiteAlias)
+	sections, err = s.repo.GetSectionsByWebsiteAlias(ctx, websiteAlias)
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.setWebsiteStyleCache(ctx, websiteAlias, sections)
+	if err != nil {
+		logger.Error(ctx, "failed to set website style cache", err, err.Error())
+	}
+
+	return sections, nil
 }
 
 func (s *Service) GetWebsiteStyle(ctx context.Context, websiteAlias string) ([]*model.Section, error) {
+	sections, err := s.getWebsiteStyleCache(ctx, websiteAlias)
+	if err != nil {
+		logger.Error(ctx, "failed to get website style from cache", err, err.Error())
+	}
+	if sections != nil {
+		logger.Info(ctx, "get website style from cache", "alias", websiteAlias)
+		return sections, nil
+	}
+
+	sections, err = s.repo.GetSectionsByWebsiteAlias(ctx, websiteAlias)
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.setWebsiteStyleCache(ctx, websiteAlias, sections)
+	if err != nil {
+		logger.Error(ctx, "failed to set website style cache", err, err.Error())
+	}
+
 	return s.repo.GetSectionsByWebsiteAlias(ctx, websiteAlias)
 }
 
