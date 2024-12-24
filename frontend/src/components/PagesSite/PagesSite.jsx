@@ -18,11 +18,13 @@ import ComponentsModal from './Components-modal/ComponentsModal'
 import { componentsMap } from '../../utils/componentLists'
 import Header1 from '../../mySite/sections/Headers/Header1'
 import MySite from '../../mySite/MySite'
-import { DndContext } from '@dnd-kit/core'
+import { DndContext, useDroppable } from '@dnd-kit/core'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setStyleSite } from '../../redux/slices/websiteSlice'
+import { getStyleSite, setStyleSite } from '../../redux/slices/websiteSlice'
 import InterfaceSite from '../../mySite/interface/Interface.site'
+import { arrayMove, SortableContext } from '@dnd-kit/sortable'
+import BlockSiteItem from '../BlockSiteItem/BlockSiteItem'
 
 const PagesSite = () => {
 	const [valueRadio, setValue] = useState('')
@@ -40,12 +42,10 @@ const PagesSite = () => {
 	const selectedComponent = componentsMap[valueRadio] || null
 
 	const listBlockSite = useSelector(state => state.site.listBlocks)
+
 	const nameSite = useSelector(state => state.site.nameSite)
 
-	console.log(listBlockSite)
-	
-
-	/* const list = [
+	/* 	const list = [
 		{
 			image_id: 'string',
 			style_id: 1,
@@ -66,7 +66,8 @@ const PagesSite = () => {
 			style_id: 10,
 			text: 'string',
 		},
-	] */
+	]
+ */
 
 	const saveEditSite = (nameSite, listBlocks) => {
 		const data = {
@@ -74,6 +75,31 @@ const PagesSite = () => {
 			website_alias: nameSite,
 		}
 		dispatch(setStyleSite(data))
+	}
+
+	/* const [ dropRef] = useDroppable({
+		id: 'componentDrag',
+	}) */
+
+	const [listBlock, setListBlock] = useState(listBlockSite)
+
+	useEffect(() => {
+		if (listBlockSite.length > 0 && listBlock.length === 0) {
+			setListBlock(listBlockSite)
+		}
+	}, [listBlockSite])
+
+	const handelDragEnd = evt => {
+		const { active, over } = evt
+
+		if (over && active.id !== over.id) {
+			setListBlock(listBlock => {
+				const oldIndex = listBlock.findIndex(item => item.id === active.id)
+				const newIndex = listBlock.findIndex(item => item.id === over.id)
+
+				return arrayMove(listBlock, oldIndex, newIndex)
+			})
+		}
 	}
 
 	return (
@@ -111,7 +137,7 @@ const PagesSite = () => {
 							width={138}
 							type={'submit'}
 							onClick={() => {
-								saveEditSite(nameSite, listBlockSite)
+								saveEditSite(nameSite, listBlock)
 							}}
 						/>
 					</li>
@@ -152,12 +178,19 @@ const PagesSite = () => {
 						<span className={styles.builder__componentTitle}>Подвал</span>
 					</label>
 				</aside>
-				<DndContext>
+				<DndContext onDragEnd={handelDragEnd}>
 					<div className={styles.builder__site}>
 						<ComponentsModal componentsList={selectedComponent} />
-						{listBlockSite.map(({ style_id, text, image_id }) => {
-							<InterfaceSite id={style_id} text={text} imageSrc={image_id} />
-						})}
+						<SortableContext items={listBlock}>
+							{listBlock.map(({ id, style_id, text, image_id }) => (
+								<BlockSiteItem
+									id={id}
+									style_id={style_id}
+									text={text}
+									image_id={image_id}
+								/>
+							))}
+						</SortableContext>
 					</div>
 				</DndContext>
 				<aside className={styles.builder__settingsList}></aside>

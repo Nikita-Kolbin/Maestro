@@ -7,8 +7,8 @@ import styles from './componentsModal.module.scss'
 const ComponentsModal = ({ componentsList }) => {
 	const componentsModal = useRef()
 	/* const [, componentDrag] = useDraggable({
-		id: 'componentDrag',
-		item: componentsList,
+		type: 'componentDrag',
+		item: [],
 	}) */
 
 	useEffect(() => {
@@ -23,13 +23,13 @@ const ComponentsModal = ({ componentsList }) => {
 		<div className={styles.componentsModal}>
 			<dialog className={styles.componentsModal__dialog} ref={componentsModal}>
 				<div className={styles.componentsModal__wrapper}>
-					<ul className={styles.componentsModal__componentsList}>
+					<ul
+						className={styles.componentsModal__componentsList}
+						
+					>
 						{componentsList &&
 							componentsList.map(item => (
-								<li
-									className={styles.componentsModal__componentItem}
-									/* ref={componentDrag} */
-								>
+								<li className={styles.componentsModal__componentItem}>
 									<h3 className={styles.componentsModal__componentTitle}>
 										{item['title']}
 									</h3>

@@ -6,8 +6,8 @@ import Footer1 from '../sections/Footers/Footer1'
 import Main1 from '../sections/Main/Main1'
 import Main2 from '../sections/Main/Main2'
 
-const InterfaceSite = (id, text='', imageSrc='') => {
-	
+const InterfaceSite = ({ id , text = '', imageSrc = '' }) => {
+
 	switch (id) {
 		case 10: {
 			return <Header1 text={text} />

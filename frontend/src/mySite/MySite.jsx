@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import InterfaceSite from './interface/Interface.site'
 
 import styles from './mySite.module.scss'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const MySite = () => {
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	console.log(navigate.pathname)
+
+	/* todo
+	useEffect(() => {
+		if (navigate.pathname.indexOf('/site')) {
+			const nameSite = navigate.pathname.slice(
+				navigate.pathname.indexOf('/site') + 6
+			)
+			console.log('nameSite')
+			console.log(nameSite)
+		}
+	}, [navigate])
+ */
 	const siteSections = useSelector(state => state.site.listBlocks)
 
 	return (
