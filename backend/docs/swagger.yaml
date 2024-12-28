@@ -7,6 +7,29 @@ definitions:
       product_id:
         type: integer
     type: object
+  model.AdminDTO:
+    properties:
+      city:
+        type: string
+      email:
+        type: string
+      email_notification:
+        type: boolean
+      father_name:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      image_id:
+        type: string
+      last_name:
+        type: string
+      telegram:
+        type: string
+      telegram_notification:
+        type: boolean
+    type: object
   model.AdminEmailPasswordRequest:
     properties:
       email:
@@ -32,6 +55,8 @@ definitions:
     properties:
       active:
         type: boolean
+      count:
+        type: integer
       description:
         type: string
       image_ids:
@@ -61,6 +86,33 @@ definitions:
       email:
         type: string
       password:
+        type: string
+    type: object
+  model.CustomerDTO:
+    properties:
+      delivery_type:
+        type: string
+      email:
+        type: string
+      email_notification:
+        type: boolean
+      father_name:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      payment_type:
+        type: string
+      phone:
+        type: string
+      telegram:
+        type: string
+      telegram_notification:
+        type: boolean
+      website_alias:
         type: string
     type: object
   model.ErrorResponse:
@@ -103,6 +155,8 @@ definitions:
     properties:
       active:
         type: boolean
+      count:
+        type: integer
       description:
         type: string
       id:
@@ -153,10 +207,52 @@ definitions:
       website_alias:
         type: string
     type: object
+  model.UpdateAdminProfileRequest:
+    properties:
+      city:
+        type: string
+      email_notification:
+        type: boolean
+      father_name:
+        type: string
+      first_name:
+        type: string
+      image_id:
+        type: string
+      last_name:
+        type: string
+      telegram:
+        type: string
+      telegram_notification:
+        type: boolean
+    type: object
+  model.UpdateCustomerProfileRequest:
+    properties:
+      delivery_type:
+        type: string
+      email_notification:
+        type: boolean
+      father_name:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      payment_type:
+        type: string
+      phone:
+        type: string
+      telegram:
+        type: string
+      telegram_notification:
+        type: boolean
+    type: object
   model.UpdateProductRequest:
     properties:
       active:
         type: boolean
+      count:
+        type: integer
       description:
         type: string
       id:
@@ -195,12 +291,50 @@ definitions:
           $ref: '#/definitions/model.SectionDTO'
         type: array
     type: object
+  product.SuccessResp:
+    properties:
+      success:
+        type: boolean
+    type: object
+  website.SuccessResp:
+    properties:
+      success:
+        type: boolean
+    type: object
 host: localhost:8082
 info:
   contact: {}
   title: Maestro
   version: "1.0"
 paths:
+  /admin/get-my-profile:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.AdminDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get my profile for admin
+      tags:
+      - admin
   /admin/sign-in:
     post:
       consumes:
@@ -261,6 +395,41 @@ paths:
           schema:
             $ref: '#/definitions/model.ErrorResponse'
       summary: SingUp admin
+      tags:
+      - admin
+  /admin/update-profile:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: admin new profile info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateAdminProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.AdminDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update admin profile
       tags:
       - admin
   /cart/add-product:
@@ -326,6 +495,68 @@ paths:
       summary: Get customer's cart
       tags:
       - cart
+  /customer/get-all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.CustomerDTO'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all customers in website TO ADMIN
+      tags:
+      - customer
+  /customer/get-my-profile:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CustomerDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get my profile to customer
+      tags:
+      - customer
   /customer/sign-in:
     post:
       consumes:
@@ -386,6 +617,41 @@ paths:
           schema:
             $ref: '#/definitions/model.ErrorResponse'
       summary: SingUp customer
+      tags:
+      - customer
+  /customer/update-profile:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: customer new profile info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateCustomerProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CustomerDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update customer profile
       tags:
       - customer
   /file/get-image/{image-id}:
@@ -580,6 +846,44 @@ paths:
       summary: Create product
       tags:
       - product
+  /product/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: product id to delete
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/product.SuccessResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update product
+      tags:
+      - product
   /product/get-active-by-alias:
     get:
       consumes:
@@ -716,6 +1020,34 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create website
+      tags:
+      - website
+  /website/delete-my-website:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/website.SuccessResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete my website
       tags:
       - website
   /website/get-my-website:

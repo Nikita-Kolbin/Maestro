@@ -10,6 +10,8 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
+      redis:
+        condition: service_healthy
 
 #  frontend:
 #    build: ./frontend
@@ -60,9 +62,25 @@ services:
     networks:
       - maestro_nw
 
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis:/data
+    networks:
+      - maestro_nw
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "$REDIS_PASSWORD", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 volumes:
   postgresql: {}
   minio_storage: {}
+  redis: {}
 
 networks:
   maestro_nw: {}

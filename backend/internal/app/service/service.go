@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"io"
+	"time"
 
 	"github.com/Nikita-Kolbin/Maestro/internal/app/model"
 )
@@ -10,6 +11,8 @@ import (
 type repository interface {
 	CreateAdmin(ctx context.Context, email, password string) (int, error)
 	GetAdminByEmailPassword(ctx context.Context, email, passwordHash string) (*model.Admin, error)
+	GetAdminById(ctx context.Context, id int) (*model.Admin, error)
+	UpdateAdminProfile(ctx context.Context, a *model.Admin) (*model.Admin, error)
 
 	CreateWebsite(ctx context.Context, alias string, adminId int) (*model.Website, error)
 	GetWebsiteByAlias(ctx context.Context, alias string) (*model.Website, error)
@@ -17,15 +20,20 @@ type repository interface {
 	AdminHaveWebsite(ctx context.Context, adminId int) (bool, error)
 	CreateSections(ctx context.Context, websiteAlias string, sections []*model.Section) error
 	GetSectionsByWebsiteAlias(ctx context.Context, websiteAlias string) ([]*model.Section, error)
+	DeleteWebsiteByAdmin(ctx context.Context, adminId int) error
 
 	CreateCustomer(ctx context.Context, alias, email, passwordHash string) (int, error)
 	GetCustomerByEmailPassword(ctx context.Context, alias, email, passwordHash string) (*model.Customer, error)
+	GetCustomerById(ctx context.Context, id int) (*model.Customer, error)
+	GetCustomersByWebsite(ctx context.Context, alias string) ([]*model.Customer, error)
+	UpdateCustomerProfile(ctx context.Context, c *model.Customer) (*model.Customer, error)
 
 	CreateProduct(ctx context.Context, product *model.Product) (*model.Product, error)
 	GetProductById(ctx context.Context, id int) (*model.Product, error)
 	UpdateProduct(ctx context.Context, product *model.Product) (*model.Product, error)
 	GetActiveProductsByAlias(ctx context.Context, alias string) (model.ProductList, error)
 	GetAllProductsByAlias(ctx context.Context, alias string) (model.ProductList, error)
+	DeleteProduct(ctx context.Context, id int) error
 
 	UpsertCartItem(ctx context.Context, cartId, productId, count int) error
 	GetCart(ctx context.Context, id int) (*model.Cart, error)
@@ -41,16 +49,23 @@ type objectStorage interface {
 	GetObject(ctx context.Context, objectId, bucketName string) (io.Reader, string, error)
 }
 
+type cache interface {
+	Set(ctx context.Context, prefix, key, val string, exp time.Duration) error
+	Get(ctx context.Context, prefix, key string) (string, error)
+}
+
 type Service struct {
 	jwtSecret string
 	repo      repository
 	storage   objectStorage
+	cache     cache
 }
 
-func New(repo repository, storage objectStorage, jwtSecret string) *Service {
+func New(repo repository, storage objectStorage, cache cache, jwtSecret string) *Service {
 	return &Service{
 		jwtSecret: jwtSecret,
 		repo:      repo,
 		storage:   storage,
+		cache:     cache,
 	}
 }

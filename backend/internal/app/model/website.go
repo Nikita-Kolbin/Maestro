@@ -19,11 +19,11 @@ type WebsiteDTO struct {
 }
 
 type Section struct {
-	Id           int    `db:"id"`
-	StyleId      int    `db:"style_id"`
-	WebsiteAlias string `db:"website_alias"`
-	Text         string `db:"text"`
-	ImageId      string `db:"image_id"`
+	Id           int    `db:"id" json:"id"`
+	StyleId      int    `db:"style_id" json:"style_id"`
+	WebsiteAlias string `db:"website_alias" json:"website_alias"`
+	Text         string `db:"text" json:"text"`
+	ImageId      string `db:"image_id" json:"image_id"`
 }
 
 type WebsiteStylesDTO struct {

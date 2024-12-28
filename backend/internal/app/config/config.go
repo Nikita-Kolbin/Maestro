@@ -17,6 +17,7 @@ type Config struct {
 	Listener ListenerConfig `envPrefix:"LISTENER_"`
 	Postgres PostgresConfig `envPrefix:"POSTGRES_"`
 	Minio    MinioConfig    `envPrefix:"MINIO_"`
+	Redis    RedisConfig    `envPrefix:"REDIS_"`
 }
 
 type ListenerConfig struct {
@@ -43,6 +44,11 @@ type MinioConfig struct {
 	Username string `env:"ROOT_USER,required"`
 	Password string `env:"ROOT_PASSWORD,required"`
 	UseSSL   bool   `env:"USE_SSL" envDefault:"false"`
+}
+
+type RedisConfig struct {
+	HostPort string `env:"HOST_PORT,required"`
+	Password string `env:"PASSWORD,required"`
 }
 
 func New() (*Config, error) {

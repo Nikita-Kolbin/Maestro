@@ -17,7 +17,7 @@ type Admin struct {
 	FatherName           string `db:"father_name"`
 	City                 string `db:"city"`
 	Telegram             string `db:"telegram"`
-	ImageId              int    `db:"image_id"`
+	ImageId              string `db:"image_id"`
 	EmailNotification    bool   `db:"email_notification"`
 	TelegramNotification bool   `db:"telegram_notification"`
 }
@@ -30,7 +30,46 @@ type AdminDTO struct {
 	FatherName           string `json:"father_name"`
 	City                 string `json:"city"`
 	Telegram             string `json:"telegram"`
-	ImageId              int    `json:"image_id"`
+	ImageId              string `json:"image_id"`
 	TelegramNotification bool   `json:"telegram_notification"`
 	EmailNotification    bool   `json:"email_notification"`
+}
+
+type UpdateAdminProfileRequest struct {
+	FirstName            string `json:"first_name"`
+	LastName             string `json:"last_name"`
+	FatherName           string `json:"father_name"`
+	City                 string `json:"city"`
+	Telegram             string `json:"telegram"`
+	ImageId              string `json:"image_id"`
+	TelegramNotification bool   `json:"telegram_notification"`
+	EmailNotification    bool   `json:"email_notification"`
+}
+
+func FromAdminToDTO(customer *Admin) *AdminDTO {
+	return &AdminDTO{
+		Id:                   customer.Id,
+		Email:                customer.Email,
+		FirstName:            customer.FirstName,
+		LastName:             customer.LastName,
+		FatherName:           customer.FatherName,
+		City:                 customer.City,
+		Telegram:             customer.Telegram,
+		ImageId:              customer.ImageId,
+		TelegramNotification: customer.TelegramNotification,
+		EmailNotification:    customer.EmailNotification,
+	}
+}
+
+func FromUpdateProfileRequestToAdmin(req *UpdateAdminProfileRequest) *Admin {
+	return &Admin{
+		FirstName:            req.FirstName,
+		LastName:             req.LastName,
+		FatherName:           req.FatherName,
+		City:                 req.City,
+		ImageId:              req.ImageId,
+		Telegram:             req.Telegram,
+		EmailNotification:    req.EmailNotification,
+		TelegramNotification: req.TelegramNotification,
+	}
 }
