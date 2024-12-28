@@ -38,9 +38,11 @@
 	}
 
 	&__site {
+		position: relative;
 		width: 100%;
 		border: 40px solid var(--color-whiteGray-border);
 		box-sizing: border-box;
+		user-select: none;
 	}
 
 	&__settingsList {

@@ -18,66 +18,6 @@ export const headersList = [
 		title: 'Шапка 3',
 		imageSrc: header3,
 	},
-	{
-		id: 1,
-		title: 'Шапка 1',
-		imageSrc: header1,
-	},
-	{
-		id: 2,
-		title: 'Шапка 2',
-		imageSrc: header2,
-	},
-	{
-		id: 3,
-		title: 'Шапка 3',
-		imageSrc: header3,
-	},
-	{
-		id: 1,
-		title: 'Шапка 1',
-		imageSrc: header1,
-	},
-	{
-		id: 2,
-		title: 'Шапка 2',
-		imageSrc: header2,
-	},
-	{
-		id: 3,
-		title: 'Шапка 3',
-		imageSrc: header3,
-	},
-	{
-		id: 1,
-		title: 'Шапка 1',
-		imageSrc: header1,
-	},
-	{
-		id: 2,
-		title: 'Шапка 2',
-		imageSrc: header2,
-	},
-	{
-		id: 3,
-		title: 'Шапка 3',
-		imageSrc: header3,
-	},
-	{
-		id: 1,
-		title: 'Шапка 1',
-		imageSrc: header1,
-	},
-	{
-		id: 2,
-		title: 'Шапка 2',
-		imageSrc: header2,
-	},
-	{
-		id: 3,
-		title: 'Шапка 3',
-		imageSrc: header3,
-	},
 ]
 
 export const footersList = [

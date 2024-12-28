@@ -8,8 +8,6 @@ import { useNavigate } from 'react-router-dom'
 const MySite = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	console.log(navigate.pathname)
-
 	/* todo
 	useEffect(() => {
 		if (navigate.pathname.indexOf('/site')) {

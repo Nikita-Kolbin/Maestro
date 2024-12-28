@@ -11,6 +11,7 @@
 		margin: 0;
 		box-shadow: var(--shadow-default);
 		transition-duration: var(--transition-duration);
+		
 	}
 
 	&__wrapper {
@@ -24,13 +25,13 @@
 		max-height: calc(100vh - 200px);
 
 		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	&__componentItem {
 		display: flex;
 		flex-direction: column;
 		row-gap: 4px;
-		cursor: grab;
 	}
 
 	&__componentTitle {
@@ -43,5 +44,6 @@
 		width: 348px;
 		user-select: none;
 		filter: drop-shadow(var(--shadow-default));
+		margin-bottom: 15px;
 	}
 }

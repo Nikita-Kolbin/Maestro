@@ -23,7 +23,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getStyleSite, setStyleSite } from '../../redux/slices/websiteSlice'
 import InterfaceSite from '../../mySite/interface/Interface.site'
-import { arrayMove, SortableContext } from '@dnd-kit/sortable'
+import {
+	arrayMove,
+	SortableContext,
+	verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
 import BlockSiteItem from '../BlockSiteItem/BlockSiteItem'
 
 const PagesSite = () => {
@@ -77,10 +81,6 @@ const PagesSite = () => {
 		dispatch(setStyleSite(data))
 	}
 
-	/* const [ dropRef] = useDroppable({
-		id: 'componentDrag',
-	}) */
-
 	const [listBlock, setListBlock] = useState(listBlockSite)
 
 	useEffect(() => {
@@ -100,6 +100,24 @@ const PagesSite = () => {
 				return arrayMove(listBlock, oldIndex, newIndex)
 			})
 		}
+	}
+
+	const addBlockToList = idBlock => {
+		const block = {
+			image_id: '333',
+			style_id: idBlock,
+			text: '',
+		}
+		setListBlock(listBlock => [...listBlock, block])
+	}
+
+	const deleteBlockFromList = idBlock => {
+		console.log(listBlock)
+		console.log(idBlock)
+
+		setListBlock(listBlock => listBlock.filter(obj => obj['id'] !== idBlock))
+		console.log('listBlock')
+		console.log(listBlock)
 	}
 
 	return (
@@ -180,14 +198,22 @@ const PagesSite = () => {
 				</aside>
 				<DndContext onDragEnd={handelDragEnd}>
 					<div className={styles.builder__site}>
-						<ComponentsModal componentsList={selectedComponent} />
-						<SortableContext items={listBlock}>
+						<ComponentsModal
+							componentsList={selectedComponent}
+							getIdAddBlock={id => addBlockToList(id)}
+						/>
+						<SortableContext
+							items={listBlock}
+							strategy={verticalListSortingStrategy}
+						>
 							{listBlock.map(({ id, style_id, text, image_id }) => (
 								<BlockSiteItem
 									id={id}
 									style_id={style_id}
 									text={text}
 									image_id={image_id}
+									key={id}
+									deleteBlock={idBlock => deleteBlockFromList(idBlock)}
 								/>
 							))}
 						</SortableContext>

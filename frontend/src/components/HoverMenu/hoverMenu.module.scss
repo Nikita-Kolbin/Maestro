@@ -1,0 +1,12 @@
+.hoverMenu {
+	position: absolute;
+	right: -32px;
+	width: 25px;
+	height: auto;
+
+	&__deleteBtn {
+		width: 100%;
+		font-size: 13px;
+		padding: 0;
+	}
+}
