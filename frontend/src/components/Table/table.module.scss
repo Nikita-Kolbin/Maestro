@@ -33,6 +33,11 @@
 		width: 222px;
 	}
 
+	&__buttons {
+		display: flex;
+		column-gap: 12px;
+	}
+
 	&__search,
 	& select {
 		padding: 6px 8px 6px 16px;

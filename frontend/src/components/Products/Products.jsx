@@ -24,9 +24,10 @@ const Products = () => {
 	}, [data])
 
 	const columns = [
+		{ heading: '', value: 'checkbox' },
 		{ heading: 'Товар', value: 'name' },
 		{ heading: 'ID', value: 'id' },
-		{ heading: 'Количество', value: 'tags' },
+		{ heading: 'Количество', value: 'count' },
 		{ heading: 'Цена', value: 'price' },
 		{ heading: 'Статус', value: 'active' },
 	]
@@ -37,6 +38,7 @@ const Products = () => {
 				<Sidebar />
 				<Table data={dataTable} columns={columns} styles={stylesTable} />
 				<ProductsModalInterface />
+
 			</section>
 		</>
 	)

@@ -13,10 +13,13 @@ export const headersList = [
 		title: 'Шапка 2',
 		imageSrc: header2,
 	},
+]
+
+export const navsList = [
 	{
-		id: 3,
-		title: 'Шапка 3',
-		imageSrc: header3,
+		id: 4,
+		title: 'Навигация 1',
+		imageSrc: header1,
 	},
 ]
 
@@ -40,5 +43,6 @@ export const footersList = [
 
 export const componentsMap = {
 	headersList: headersList,
+	navsList: navsList,
 	footersList: footersList,
 }

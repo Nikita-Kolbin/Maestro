@@ -2,11 +2,25 @@ import React from 'react'
 
 import styles from './header.module.scss'
 
-const Header1 = props => {
+import BASKET from '../../../assets/images/basket.svg'
+import SignIn from '../../siteModals/SignIn/'
+
+const Header1 = () => {
 	return (
 		<header className={styles.header}>
-			<h1>Header1</h1>
-			<div>{props.text}</div>
+			<div className={styles.logo}>
+				<a href='#home'>LOGO</a>{' '}
+			</div>
+			<div className={styles.authButtons}>
+				<button className={styles.loginButton}>Вход</button>
+
+				<div className={styles.cartIcon}>
+					<button className={styles.cartButton}>
+						<img src={BASKET} alt='BASKET' />
+					</button>
+				</div>
+			</div>
+			<SignIn />
 		</header>
 	)
 }

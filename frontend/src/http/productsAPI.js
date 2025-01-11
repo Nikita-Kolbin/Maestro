@@ -1,13 +1,9 @@
 import { $authHost, $host } from '.'
 
 export const uploadImageAPI = async img => {
-	const { data } = await $host.post(
-		'api/file/upload-image',
-		img,
-		{
-			headers: { 'Content-Type': ' multipart/form-data' },
-		}
-	)
+	const { data } = await $host.post('api/file/upload-image', img, {
+		headers: { 'Content-Type': ' multipart/form-data' },
+	})
 
 	return data
 }
@@ -44,8 +40,14 @@ export const editProductAPI = async data => {
 }
 
 export const getProductsAPI = async () => {
-	const response = await $authHost.get(
-		`api/product/get-all`
-	)
+	const response = await $authHost.get(`api/product/get-all`)
+	return response
+}
+export const deleteProductAPI = async idProduct => {
+	const response = await $authHost.delete(`api/product/delete`, {
+		params: {
+			id: idProduct,
+		},
+	})
 	return response
 }

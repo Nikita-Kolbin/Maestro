@@ -4,7 +4,8 @@ import Select from '../Select/Select'
 import { productEdit, selectSort } from '../../utils/select'
 import { useLocation } from 'react-router-dom'
 import { productsModal } from '../../redux/slices/selectSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Button from '../button/button'
 
 /* const filterRows = (searchText, listData) => {
 	if (!searchText) {
@@ -37,9 +38,18 @@ const Table = ({ data, columns, styles }) => {
 
 	const location = useLocation()
 	const [isProductsPage, setProductsPage] = useState(false)
+	const [valueSelect, setValueSelect] = useState(
+		useSelector(state => state.select.productsModal)
+	)
+	/* 	let value = useSelector(state => state.select.productsModal)
+	 */
+	const resetSelect = () => {
+		productsModal('Редактировать каталог')
+		setValueSelect('Редактировать каталог')
+		console.log(valueSelect)
+	}
 
-	/* 
-	console.log(data) */
+	useEffect(() => {}, [valueSelect])
 
 	useEffect(() => {
 		if (location.pathname === '/admin/products') {
@@ -68,13 +78,33 @@ const Table = ({ data, columns, styles }) => {
 				</div>
 				{isProductsPage && (
 					<div className={styles.table__headRight}>
-						<Select
-							styles={styles}
-							name={'productsSelect'}
-							id={'productsSelect'}
-							optionArray={productEdit}
-							reducer={productsModal}
-						/>
+						{(valueSelect !== 'Удалить товары' && (
+							<Select
+								styles={styles}
+								name={'productsSelect'}
+								id={'productsSelect'}
+								optionArray={productEdit}
+								reducer={productsModal}
+							/>
+						)) ||
+							(valueSelect === 'Удалить товары' && (
+								<div className={styles.table__buttons}>
+									<Button
+										buttonText={'Удалить'}
+										colorBack={'var(--color-black)'}
+										colorText={'var(--color-light)'}
+										width={92}
+									/>
+
+									<Button
+										buttonText={'Отменить'}
+										colorBack={'var(--color-light)'}
+										colorText={'var(--color-black)'}
+										width={106}
+										onClick={() => resetSelect()}
+									/>
+								</div>
+							))}
 					</div>
 				)}
 			</div>
@@ -112,7 +142,11 @@ const TableRow = ({ item, columns, styles }) => (
 		{columns.map((columnItem, index) => {
 			return (
 				<td key={index} className={styles.table__cell}>
-					{item[columnItem.value]}
+					{item[columnItem.value] ? (
+						item[columnItem.value]
+					) : (
+						<input type='checkbox'></input>
+					)}
 				</td>
 			)
 		})}

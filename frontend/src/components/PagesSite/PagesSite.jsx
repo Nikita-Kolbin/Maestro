@@ -1,39 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect, useId } from 'react'
 
 import iconViewSite from '../../assets/images/ic_view-site.svg'
 import iconHeader from '../../assets/images/icon_components/ic_header.png'
 import iconFooter from '../../assets/images/icon_components/ic_footer.png'
 
-import Table from '../Table/Table'
-import Sidebar from '../Sidebar/Sidebar'
-
-import stylesTable from '../Table/table.module.scss'
-import cabinetStyles from '../Cabinet/cabinet.module.scss'
 import styles from './pagesSite.module.scss'
 import Button from '../button/button'
 import { ROUTESITE } from '../../utils/routes'
 import ComponentsModal from './Components-modal/ComponentsModal'
 
 import { componentsMap } from '../../utils/componentLists'
-import Header1 from '../../mySite/sections/Headers/Header1'
-import MySite from '../../mySite/MySite'
-import { DndContext, useDroppable } from '@dnd-kit/core'
+
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getStyleSite, setStyleSite } from '../../redux/slices/websiteSlice'
-import InterfaceSite from '../../mySite/interface/Interface.site'
-import {
-	arrayMove,
-	SortableContext,
-	verticalListSortingStrategy,
-} from '@dnd-kit/sortable'
-import BlockSiteItem from '../BlockSiteItem/BlockSiteItem'
+import { arrayMove } from '@dnd-kit/sortable'
+
+import RenderSiteDnd from '../RenderSiteDnd/RenderSiteDnd'
 
 const PagesSite = () => {
 	const [valueRadio, setValue] = useState('')
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+
+	const listBlockSite = useSelector(state => state.site.listBlocks)
+	const nameSite = useSelector(state => state.site.nameSite)
+
+	const selectedComponent = componentsMap[valueRadio] || null
+
+	const [listBlock, setListBlock] = useState(listBlockSite)
+	const [nextId, setNextId] = useState(100)
 
 	const onToggleValue = (evt, nameComponent) => {
 		if (valueRadio && valueRadio === nameComponent) {
@@ -42,12 +38,6 @@ const PagesSite = () => {
 			setValue(nameComponent)
 		}
 	}
-
-	const selectedComponent = componentsMap[valueRadio] || null
-
-	const listBlockSite = useSelector(state => state.site.listBlocks)
-
-	const nameSite = useSelector(state => state.site.nameSite)
 
 	/* 	const list = [
 		{
@@ -81,17 +71,22 @@ const PagesSite = () => {
 		dispatch(setStyleSite(data))
 	}
 
-	const [listBlock, setListBlock] = useState(listBlockSite)
-
 	useEffect(() => {
 		if (listBlockSite.length > 0 && listBlock.length === 0) {
-			setListBlock(listBlockSite)
+			const updateListBlockSite = listBlockSite.map((item, index) => ({
+				...item,
+				id: index,
+			}))
+			setListBlock(updateListBlockSite)
 		}
 	}, [listBlockSite])
 
+	useEffect(() => {
+		setValue('')
+	}, [listBlock])
+
 	const handelDragEnd = evt => {
 		const { active, over } = evt
-
 		if (over && active.id !== over.id) {
 			setListBlock(listBlock => {
 				const oldIndex = listBlock.findIndex(item => item.id === active.id)
@@ -104,20 +99,17 @@ const PagesSite = () => {
 
 	const addBlockToList = idBlock => {
 		const block = {
+			id: nextId,
 			image_id: '333',
 			style_id: idBlock,
 			text: '',
 		}
 		setListBlock(listBlock => [...listBlock, block])
+		setNextId(prevId => prevId + 1)
 	}
 
 	const deleteBlockFromList = idBlock => {
-		console.log(listBlock)
-		console.log(idBlock)
-
 		setListBlock(listBlock => listBlock.filter(obj => obj['id'] !== idBlock))
-		console.log('listBlock')
-		console.log(listBlock)
 	}
 
 	return (
@@ -167,7 +159,6 @@ const PagesSite = () => {
 						className={styles.builder__componentInput}
 						id='123'
 						type='radio'
-						name='components'
 						checked={valueRadio === 'headersList'}
 						onClick={e => onToggleValue(e, 'headersList')}
 					/>
@@ -183,7 +174,6 @@ const PagesSite = () => {
 						className={styles.builder__componentInput}
 						id='1234'
 						type='radio'
-						name='components'
 						checked={valueRadio === 'footersList'}
 						onClick={e => onToggleValue(e, 'footersList')}
 					/>
@@ -195,30 +185,36 @@ const PagesSite = () => {
 						/>
 						<span className={styles.builder__componentTitle}>Подвал</span>
 					</label>
-				</aside>
-				<DndContext onDragEnd={handelDragEnd}>
-					<div className={styles.builder__site}>
-						<ComponentsModal
-							componentsList={selectedComponent}
-							getIdAddBlock={id => addBlockToList(id)}
+					<input
+						className={styles.builder__componentInput}
+						id='12345'
+						type='radio'
+						checked={valueRadio === 'navsList'}
+						onClick={e => onToggleValue(e, 'navsList')}
+					/>
+					<label className={styles.builder__componentLabel} htmlFor='12345'>
+						<img
+							className={styles.builder__componentImg}
+							src={iconFooter}
+							alt='icon footer'
 						/>
-						<SortableContext
-							items={listBlock}
-							strategy={verticalListSortingStrategy}
-						>
-							{listBlock.map(({ id, style_id, text, image_id }) => (
-								<BlockSiteItem
-									id={id}
-									style_id={style_id}
-									text={text}
-									image_id={image_id}
-									key={id}
-									deleteBlock={idBlock => deleteBlockFromList(idBlock)}
-								/>
-							))}
-						</SortableContext>
-					</div>
-				</DndContext>
+						<span className={styles.builder__componentTitle}>Навигация</span>
+					</label>
+				</aside>
+
+				<div className={styles.builder__site}>
+					<ComponentsModal
+						componentsList={selectedComponent}
+						getIdAddBlock={id => addBlockToList(id)}
+					/>
+
+					<RenderSiteDnd
+						listBlock={listBlock}
+						handelDragEnd={handelDragEnd}
+						deleteBlockFromList={deleteBlockFromList}
+					/>
+				</div>
+
 				<aside className={styles.builder__settingsList}></aside>
 			</div>
 		</div>
