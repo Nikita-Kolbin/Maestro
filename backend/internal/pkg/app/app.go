@@ -7,10 +7,11 @@ import (
 	"github.com/Nikita-Kolbin/Maestro/internal/app/config"
 	"github.com/Nikita-Kolbin/Maestro/internal/app/repository"
 	"github.com/Nikita-Kolbin/Maestro/internal/app/service"
+	"github.com/Nikita-Kolbin/Maestro/internal/pkg/clients/minioclient"
+	"github.com/Nikita-Kolbin/Maestro/internal/pkg/clients/notification"
+	"github.com/Nikita-Kolbin/Maestro/internal/pkg/clients/redisclient"
 	"github.com/Nikita-Kolbin/Maestro/internal/pkg/httpserver"
 	"github.com/Nikita-Kolbin/Maestro/internal/pkg/logger"
-	"github.com/Nikita-Kolbin/Maestro/internal/pkg/minioclient"
-	"github.com/Nikita-Kolbin/Maestro/internal/pkg/redisclient"
 )
 
 func Run(ctx context.Context) error {
@@ -36,7 +37,9 @@ func Run(ctx context.Context) error {
 	}
 	defer cache.Close()
 
-	srv := service.New(repo, stg, cache, cfg.JWTSecret)
+	notify := notification.New(cfg.Notification.HostPort)
+
+	srv := service.New(repo, stg, cache, notify, cfg.JWTSecret)
 
 	r := router.New(ctx, srv, cfg.Listener.GetHostPort())
 

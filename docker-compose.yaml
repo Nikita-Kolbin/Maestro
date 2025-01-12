@@ -12,6 +12,19 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      notification:
+        condition: service_started
+
+  notification:
+    build: ./notification
+    env_file: ./notification/.env
+    ports:
+      - 8083:8083
+    networks:
+      - maestro_nw
+    depends_on:
+      postgresql:
+        condition: service_healthy
 
 #  frontend:
 #    build: ./frontend

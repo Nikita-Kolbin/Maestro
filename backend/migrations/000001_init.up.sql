@@ -119,3 +119,8 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE ,
     FOREIGN KEY (saved_product_id) REFERENCES saved_products (id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS telegrams (
+    username TEXT   PRIMARY KEY,
+    chat_id  BIGINT NOT NULL
+);
