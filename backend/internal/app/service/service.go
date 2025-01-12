@@ -11,6 +11,7 @@ import (
 type repository interface {
 	CreateAdmin(ctx context.Context, email, password string) (int, error)
 	GetAdminByEmailPassword(ctx context.Context, email, passwordHash string) (*model.Admin, error)
+	GetAdminByAlias(ctx context.Context, alias string) (*model.Admin, error)
 	GetAdminById(ctx context.Context, id int) (*model.Admin, error)
 	UpdateAdminProfile(ctx context.Context, a *model.Admin) (*model.Admin, error)
 
@@ -54,18 +55,25 @@ type cache interface {
 	Get(ctx context.Context, prefix, key string) (string, error)
 }
 
-type Service struct {
-	jwtSecret string
-	repo      repository
-	storage   objectStorage
-	cache     cache
+type notification interface {
+	SendEmail(email, msg string) error
+	SendTelegram(username, msg string) error
 }
 
-func New(repo repository, storage objectStorage, cache cache, jwtSecret string) *Service {
+type Service struct {
+	jwtSecret    string
+	repo         repository
+	storage      objectStorage
+	cache        cache
+	notification notification
+}
+
+func New(repo repository, storage objectStorage, cache cache, notification notification, jwtSecret string) *Service {
 	return &Service{
-		jwtSecret: jwtSecret,
-		repo:      repo,
-		storage:   storage,
-		cache:     cache,
+		jwtSecret:    jwtSecret,
+		repo:         repo,
+		storage:      storage,
+		cache:        cache,
+		notification: notification,
 	}
 }

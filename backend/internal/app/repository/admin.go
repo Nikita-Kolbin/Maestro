@@ -62,6 +62,23 @@ func (r *Repository) GetAdminById(ctx context.Context, id int) (*model.Admin, er
 	return admin, nil
 }
 
+func (r *Repository) GetAdminByAlias(ctx context.Context, alias string) (*model.Admin, error) {
+	query := `
+	SELECT id, email, first_name, last_name, father_name, city, 
+       telegram, image_id, email_notification, telegram_notification
+	FROM admins WHERE id = (SELECT admin_id FROM websites WHERE alias = $1)`
+
+	admin := &model.Admin{}
+
+	err := r.conn.GetContext(ctx, admin, query, alias)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return admin, nil
+}
+
 func (r *Repository) UpdateAdminProfile(ctx context.Context, a *model.Admin) (*model.Admin, error) {
 	query := `
 	UPDATE admins 

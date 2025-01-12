@@ -11,19 +11,17 @@ import (
 const ENVInDocker = "IN_DOCKER"
 
 type Config struct {
-	Env       string `env:"JWT_SECRET" envDefault:"dev"`
-	JWTSecret string `env:"JWT_SECRET"`
+	Env string `env:"JWT_SECRET" envDefault:"dev"`
 
-	Listener     ListenerConfig     `envPrefix:"LISTENER_"`
-	Postgres     PostgresConfig     `envPrefix:"POSTGRES_"`
-	Minio        MinioConfig        `envPrefix:"MINIO_"`
-	Redis        RedisConfig        `envPrefix:"REDIS_"`
-	Notification NotificationConfig `envPrefix:"NOTIFICATION_"`
+	Listener ListenerConfig `envPrefix:"LISTENER_"`
+	Postgres PostgresConfig `envPrefix:"POSTGRES_"`
+	Telegram TelegramConfig `envPrefix:"TG_"`
+	Email    EmailConfig    `envPrefix:"EMAIL_"`
 }
 
 type ListenerConfig struct {
 	Host         string        `env:"HOST" envDefault:"0.0.0.0"`
-	Port         int32         `env:"PORT" envDefault:"8081"`
+	Port         int32         `env:"PORT" envDefault:"8083"`
 	ReadTimeout  time.Duration `env:"READ_TIMEOUT" envDefault:"5m"`
 	WriteTimeout time.Duration `env:"WRITE_TIMEOUT" envDefault:"1m"`
 	IdleTimeout  time.Duration `env:"IDLE_TIMEOUT" envDefault:"5s"`
@@ -40,20 +38,15 @@ type PostgresConfig struct {
 	DBTimeout         time.Duration `env:"DB_TIMEOUT" envDefault:"5s"`
 }
 
-type MinioConfig struct {
-	HostPort string `env:"HOST_PORT,required"`
-	Username string `env:"ROOT_USER,required"`
-	Password string `env:"ROOT_PASSWORD,required"`
-	UseSSL   bool   `env:"USE_SSL" envDefault:"false"`
+type TelegramConfig struct {
+	Token string `env:"TOKEN,required"`
 }
 
-type RedisConfig struct {
-	HostPort string `env:"HOST_PORT,required"`
+type EmailConfig struct {
+	Email    string `env:"ADDRESS,required"`
 	Password string `env:"PASSWORD,required"`
-}
-
-type NotificationConfig struct {
-	HostPort string `env:"HOST_PORT,required"`
+	SMTPHost string `env:"SMTP_HOST,required"`
+	SMTPPort string `env:"SMTP_PORT" envDefault:"25"`
 }
 
 func New() (*Config, error) {
