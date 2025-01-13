@@ -3,6 +3,7 @@ import React, { useState, useEffect, useId } from 'react'
 import iconViewSite from '../../assets/images/ic_view-site.svg'
 import iconHeader from '../../assets/images/icon_components/ic_header.png'
 import iconFooter from '../../assets/images/icon_components/ic_footer.png'
+import iconCatalog from '../../assets/images/icon_components/ic_catalog.png'
 
 import styles from './pagesSite.module.scss'
 import Button from '../button/button'
@@ -69,6 +70,7 @@ const PagesSite = () => {
 			website_alias: nameSite,
 		}
 		dispatch(setStyleSite(data))
+		alert('Стиль сайта опубликован!')
 	}
 
 	useEffect(() => {
@@ -199,6 +201,21 @@ const PagesSite = () => {
 							alt='icon footer'
 						/>
 						<span className={styles.builder__componentTitle}>Навигация</span>
+					</label>
+					<input
+						className={styles.builder__componentInput}
+						id='31'
+						type='radio'
+						checked={valueRadio === 'catalogList'}
+						onClick={e => onToggleValue(e, 'catalogList')}
+					/>
+					<label className={styles.builder__componentLabel} htmlFor='31'>
+						<img
+							className={styles.builder__componentImg}
+							src={iconCatalog}
+							alt='icon catalog'
+						/>
+						<span className={styles.builder__componentTitle}>Каталог</span>
 					</label>
 				</aside>
 

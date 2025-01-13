@@ -39,7 +39,11 @@ const Sidebar = () => {
 					<h2 className={stylesNav.nav__title}>Редактор сайта</h2>
 
 					<li className={stylesNav.nav__item}>
-						<NavLink className={stylesNav.nav__link} to={ROUTESITE.MYSITE}>
+						<NavLink
+							className={stylesNav.nav__link}
+							to={ROUTESITE.MYSITE}
+							target='_blank'
+						>
 							Мой сайт
 						</NavLink>
 					</li>
@@ -51,12 +55,7 @@ const Sidebar = () => {
 					</li>
 					<li className={stylesNav.nav__item}>
 						<NavLink className={stylesNav.nav__link} to={ROUTES.PAGESSITE}>
-							Страницы
-						</NavLink>
-					</li>
-					<li className={stylesNav.nav__item}>
-						<NavLink className={stylesNav.nav__link} to={ROUTES.MENU}>
-							Меню
+							Конструктор
 						</NavLink>
 					</li>
 				</ul>

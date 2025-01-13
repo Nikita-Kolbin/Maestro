@@ -3,11 +3,16 @@ import InterfaceSite from './interface/Interface.site'
 
 import styles from './mySite.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { getProfileCustomer, setSiteAlias } from '../redux/slices/customerSlice'
+import { getActiveProducts } from '../redux/slices/productsActiveSlice'
+import { getCartProducts } from '../redux/slices/cartSlice'
 
 const MySite = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
+	const location = useLocation()
+	const { isAuth } = useSelector(state => state.customer)
 	/* todo
 	useEffect(() => {
 		if (navigate.pathname.indexOf('/site')) {
@@ -19,6 +24,16 @@ const MySite = () => {
 		}
 	}, [navigate])
  */
+	useEffect(() => {
+		const alias = location.pathname.slice(location.pathname.indexOf('site') + 5)
+		dispatch(setSiteAlias(alias))
+		dispatch(getActiveProducts(alias))
+		if (isAuth) {
+			dispatch(getCartProducts())
+			dispatch(getProfileCustomer())
+		}
+	}, [dispatch, isAuth])
+
 	const siteSections = useSelector(state => state.site.listBlocks)
 
 	return (
@@ -28,7 +43,7 @@ const MySite = () => {
 					<InterfaceSite id={style_id} text={text} imageId={image_id} />
 				))
 			) : (
-				<h1>404 not found</h1>
+				<h1>Loading</h1>
 			)}
 		</body>
 	)

@@ -1,0 +1,257 @@
+.basket {
+	width: 800px; // Ширина модального окна
+	height: fit-content;
+	border: none; // Убираем рамку
+	border-radius: 8px; // Скругленные углы
+	/* padding: 20px; // Внутренние отступы */
+	background-color: white; // Цвет фона
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Тень
+}
+
+.basketContent {
+	display: flex;
+	flex-direction: column; // Вертикальное выравнивание
+	align-items: center; // Центрирование содержимого
+}
+
+.productList {
+	width: 100%; // Ширина списка товаров
+
+	overflow-y: auto; // Прокрутка
+}
+
+.productCard {
+	display: flex; // Горизонтальное расположение карточек
+	align-items: center; // Центрирование по вертикали
+	padding: 10px; // Внутренние отступы
+	border-bottom: 1px solid #ccc; // Разделитель между товарами
+}
+
+.productImage {
+	width: 80px; // Ширина изображения
+	height: auto; // Автовысота
+	border-radius: 10px;
+	margin-right: 10px; // Отступ справа
+}
+
+.productDetails {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-grow: 1; // Занять оставшееся пространство
+}
+
+.counterButton {
+	width: 30px;
+	height: 30px;
+	background-color: #dddddd;
+	color: black;
+	border: none;
+	padding: 0;
+	padding-bottom: 3px;
+	padding-left: 1px;
+	border-radius: 50%;
+	user-select: none;
+	cursor: pointer;
+	margin: 0 5px;
+	transition: background-color 0.3s;
+
+	&:hover {
+		background-color: #bbbbbb;
+	}
+}
+
+.productName {
+	text-align: left;
+	font-size: 16px; // Размер шрифта названия товара
+	margin-bottom: 10px;
+}
+
+.quantityControl {
+	display: flex; // Горизонтальное расположение кнопок
+	align-items: center; // Центрирование по вертикали
+	margin: 5px 0; // Отступы
+}
+
+.quantityInput {
+	width: 40px; // Ширина поля ввода
+	text-align: center; // Центрирование текста
+	margin: 0 5px; // Отступы
+}
+
+.productTotal {
+	font-weight: bold; // Жирный шрифт для итоговой суммы
+	margin-top: 5px; // Отступ сверху
+}
+.basketFooter {
+	display: flex; // Выравнивание кнопок
+	justify-content: right; // Распределение кнопок
+	width: 90%; // Ширина футера
+}
+
+.basketClear {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.checkoutButton {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 350px;
+	height: 50px;
+	padding: 10px 15px; // Внутренние отступы
+	border: none; // Убираем рамку
+	border-radius: 10px; // Скругленные углы
+	background-color: black; // Зеленый цвет для кнопки оформления
+	color: white; // Белый текст
+	font-size: 18px;
+	cursor: pointer; // Курсор в виде указателя
+
+	&:hover {
+		opacity: 0.7;
+	}
+}
+
+.totalAmount {
+	font-weight: bold; // Жирный шрифт для итоговой суммы
+}
+
+.footer {
+	position: sticky;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+	height: 70px;
+	bottom: 0;
+	box-shadow: 0 -4px 24px 0 rgba(53, 51, 57, 0.08);
+	background-color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+.orderForm {
+	display: flex;
+	flex-direction: column;
+}
+
+.formGroup {
+	margin-bottom: 15px; // Добавлено расстояние между полями ввода
+}
+
+.input {
+	margin-bottom: 10px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.deliveryPayment {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.delivery,
+.payment {
+	flex: 1;
+	margin-right: 10px;
+}
+
+.radioLabel {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+	border: 1px solid black;
+	padding: 5px 10px;
+	border-radius: 10px;
+}
+
+.radioInput {
+	display: none; // Скрываем стандартные радиокнопки
+}
+
+.customRadio {
+	width: 20px;
+	height: 20px;
+	border: 2px solid #ccc;
+	border-radius: 50%;
+	margin-right: 10px;
+	position: relative;
+}
+
+.radioInput:checked + .customRadio {
+	border-color: #4caf50; // Цвет обводки при выборе
+}
+.radioInput:checked + .radioLabel {
+	border-color: #4caf50;
+}
+
+.radioInput:checked + .customRadio::after {
+	content: '';
+	width: 12px;
+	height: 12px;
+	background-color: #4caf50; // Цвет внутреннего круга
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.textarea {
+	width: 100%;
+	height: 100px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-bottom: 20px;
+}
+
+.orderSummary {
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+.submitButton {
+	padding: 10px 20px;
+	background-color: black;
+	color: white;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+	background-color: #45a049;
+}
+
+.backButton {
+	padding: 10px 20px;
+	border-radius: 10px;
+	background-color: black; // Красный цвет для кнопки "Вернуться к корзине"
+	color: white;
+	border: none;
+	cursor: pointer;
+	margin-top: 10px; // Отступ сверху
+	transition: background-color 0.3s;
+	margin-bottom: 30px;
+}
+
+.backButton:hover {
+	background-color: #e53935; // Темнее при наведении
+}
+
+.subtitle {
+	text-align: left;
+	margin-bottom: 20px;
+	font-size: 22px;
+}

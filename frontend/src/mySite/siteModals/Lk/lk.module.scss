@@ -1,0 +1,151 @@
+.lk {
+	width: 400px; // Ширина модального окна
+	border: none; // Убираем рамку
+	border-radius: 8px; // Скругленные углы
+	padding: 20px; // Внутренние отступы
+	background-color: white; // Цвет фона
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Тень
+}
+
+.signin__wrapper {
+	display: flex;
+	flex-direction: column; // Вертикальное выравнивание
+	align-items: center; // Центрирование содержимого
+}
+
+.form {
+	width: 100%; // Ширина формы
+	display: flex;
+	flex-direction: column; // Вертикальное расположение полей
+}
+
+.inputWrapper {
+	position: relative; // Для позиционирования лейбла
+	margin-bottom: 25px; // Отступ между полями
+}
+
+.input {
+	height: 40px; // Уменьшенная высота
+	padding: 10px; // Внутренние отступы
+	border: 1px solid #ccc; // Рамка
+	border-radius: 4px; // Скругленные углы
+	margin-top: 5px; // Отступ сверху
+	transition: border-color 0.3s ease; // Анимация изменения цвета рамки
+	text-align: left; // Выровнять текст по левому краю
+	font-size: 16px;
+	width: 250px;
+}
+
+.input:focus {
+	border-color: #4caf50; // Цвет рамки при фокусе
+}
+
+.label {
+	position: absolute; // Абсолютное позиционирование
+	left: 70px; // Отступ слева
+	top: 15px; // Отступ сверху
+	font-size: 16px;
+	transition: 0.2s ease all; // Плавная анимация
+	color: #aaa; // Цвет лейбла
+	pointer-events: none; // Игнорировать события мыши
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+	top: -15px; // Перемещение лейбла вверх
+	left: 60px; // Положение лейбла
+	font-size: 12px; // Уменьшение размера шрифта
+	color: #4caf50; // Цвет лейбла при фокусе
+}
+
+.inputError {
+	border-color: red; // Цвет рамки при ошибке
+}
+
+.errorMessage {
+	position: absolute;
+	color: red; // Цвет сообщения об ошибке
+	font-size: 0.8em; // Размер шрифта сообщения об ошибке
+	margin-top: 5px; // Отступ сверху
+}
+
+.checkboxWrapper {
+	margin-bottom: 20px; // Отступ между чекбоксами и кнопкой
+}
+
+.checkboxLabel {
+	display: flex; // Используем флекс для выравнивания
+	align-items: center; // Центрирование по вертикали
+	cursor: pointer; // Курсор в виде указателя
+	user-select: none;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.checkbox {
+	display: none; // Скрываем стандартный чекбокс
+}
+
+.customCheckbox {
+	width: 20px; // Ширина кастомного чекбокса
+	height: 20px; // Высота кастомного чекбокса
+	border: 2px solid #ccc; // Рамка кастомного чекбокса
+	border-radius: 4px; // Скругленные углы
+	margin-right: 10px; // Отступ между чекбоксом и текстом
+	display: flex; // Используем флекс для центрирования галочки
+	justify-content: center; // Центрирование по горизонтали
+	align-items: center; // Центрирование по вертикали
+}
+
+.checkbox:checked + .customCheckbox {
+	background-color: #4caf50; // Цвет фона при выборе
+	border-color: #4caf50; // Цвет рамки при выборе
+}
+
+.checkbox:checked + .customCheckbox::after {
+	content: ''; // Создаем галочку
+	position: absolute; // Абсолютное позиционирование
+	width: 5px; // Ширина галочки
+	height: 10px; // Высота галочки
+	border: solid white; // Цвет галочки
+	border-width: 0 2px 2px 0; // Формируем галочку
+	transform: rotate(45deg); // Поворачиваем галочку
+}
+
+.submitButton {
+	padding: 10px 15px; // Внутренние отступы
+	border: none; // Убираем рамку
+	border-radius: 4px; // Скругленные углы
+	background-color: #4caf50; // Зеленый цвет для кнопки
+	color: white; // Белый текст
+	cursor: pointer; // Курсор в виде указателя
+	transition: background-color 0.3s ease; // Анимация изменения цвета кнопки
+}
+
+.submitButton:hover {
+	background-color: #45a049; // Цвет кнопки при наведении
+}
+
+.notifText {
+	font-size: 16px;
+}
+.notifLink {
+	font-size: 16px;
+	color: #487fd3;
+	border-bottom: 1px solid #487fd3;
+}
+
+.exitButton {
+	margin-top: 20px;
+	padding: 10px 15px; // Внутренние отступы
+	border: none; // Убираем рамку
+	border-radius: 4px; // Скругленные углы
+	background-color: black; // Зеленый цвет для кнопки
+	color: white; // Белый текст
+	cursor: pointer; // Курсор в виде указателя
+	transition: background-color 0.3s ease; // Анимация изменения цвета кнопки
+
+	&:hover {
+		background-color: rgb(63, 63, 63);
+	}
+}

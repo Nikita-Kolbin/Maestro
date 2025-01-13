@@ -1,8 +1,8 @@
 import React from 'react'
 
-import styles from './main.module.scss'
+import styles from './catalog.module.scss'
 
-const Main2 = () => {
+const Catalog2 = () => {
 	return (
 		<main className={styles.main__red}>
 			<h1>Main2</h1>
@@ -10,4 +10,4 @@ const Main2 = () => {
 	)
 }
 
-export default Main2
+export default Catalog2

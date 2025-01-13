@@ -2,10 +2,12 @@ import React from 'react'
 
 import Header1 from '../sections/Headers/Header1'
 import Header2 from '../sections/Headers/Header2'
-import Footer1 from '../sections/Footers/Footer1'
-import Main1 from '../sections/Main/Main1'
-import Main2 from '../sections/Main/Main2'
 import Nav1 from '../sections/Navbar/Nav1'
+
+import Catalog1 from '../sections/Catalog/Catalog1'
+import Catalog2 from '../sections/Catalog/Catalog2'
+
+import Footer1 from '../sections/Footers/Footer1'
 
 const InterfaceSite = ({ id, text = '', imageSrc = '' }) => {
 	switch (id) {
@@ -18,11 +20,12 @@ const InterfaceSite = ({ id, text = '', imageSrc = '' }) => {
 		case 4: {
 			return <Nav1 />
 		}
-		case 10: {
-			return <Main1 />
+		
+		case 5: {
+			return <Catalog1 />
 		}
-		case 3: {
-			return <Main2 />
+		case 6: {
+			return <Catalog2 />
 		}
 		case 11:
 			return <Footer1 />

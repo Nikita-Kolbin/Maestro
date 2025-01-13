@@ -7,7 +7,7 @@ import Button from '../../button/button'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { productСreateAPI } from '../../../http/productsAPI'
-
+import { productsModal } from '../../../redux/slices/selectSlice'
 
 const ProductsModal = ({ active = false }) => {
 	/* const handleModalClick = ({ currentTarget, target }) => {
@@ -21,7 +21,8 @@ const ProductsModal = ({ active = false }) => {
 	productModal?.addEventListener('click', handleModalClick) */
 
 	const productModal = useRef(null)
-	
+	const dispatch = useDispatch()
+
 	useEffect(() => {
 		if (productModal.current) {
 			productModal.current.showModal()
@@ -38,11 +39,22 @@ const ProductsModal = ({ active = false }) => {
 	const onSubmit = data => {
 		productСreateAPI(data)
 		productModal.current.close()
-		
+		dispatch(productsModal(null))
+	}
+
+	const handleCloseOverlay = e => {
+		if (e.target.classList.contains('modal')) {
+			productModal.current.close()
+			dispatch(productsModal(null))
+		}
 	}
 
 	return (
-		<dialog className={styles.productModal} ref={productModal}>
+		<dialog
+			className={`modal ` + styles.productModal}
+			ref={productModal}
+			onClick={handleCloseOverlay}
+		>
 			<div className={styles.productModal__wrapper}>
 				<h3 className={styles.productModal__title}>Добавление товара</h3>
 				<form
@@ -81,7 +93,7 @@ const ProductsModal = ({ active = false }) => {
 							placeholder={'Введите количество'}
 							label={'Количество'}
 							required={true}
-							register={register('countProduct')}
+							register={register('count')}
 						/>
 					</div>
 					<div className={styles.productModal__textareaWrapper}>

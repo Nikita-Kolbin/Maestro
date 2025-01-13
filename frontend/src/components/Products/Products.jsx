@@ -24,7 +24,7 @@ const Products = () => {
 	}, [data])
 
 	const columns = [
-		{ heading: '', value: 'checkbox' },
+		/* { heading: '', value: 'checkbox' }, */
 		{ heading: 'Товар', value: 'name' },
 		{ heading: 'ID', value: 'id' },
 		{ heading: 'Количество', value: 'count' },

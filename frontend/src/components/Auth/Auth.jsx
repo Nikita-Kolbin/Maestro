@@ -29,7 +29,7 @@ const Auth = () => {
 	const { isAuth } = useSelector(state => state.user)
 	const dispatch = useDispatch()
 
-	const click = async () => {
+	const handleSubmit = async () => {
 		try {
 			if (isLoginPage) {
 				dispatch(login({ email, password }))
@@ -99,10 +99,10 @@ const Auth = () => {
 						</label>
 					)}
 					<Button
-						buttonText={isLoginPage ? 'Войти' : 'Зарегестрироваться'}
+						buttonText={isLoginPage ? 'Войти' : 'Зарегистрироваться'}
 						colorBack={'var(--color-black)'}
 						colorText={'var(--color-light)'}
-						onClick={click}
+						onClick={handleSubmit}
 					/>
 				</form>
 				<p className={styles.auth__continueWith}>или продолжить с</p>

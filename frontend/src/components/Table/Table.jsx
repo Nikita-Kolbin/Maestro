@@ -142,11 +142,16 @@ const TableRow = ({ item, columns, styles }) => (
 		{columns.map((columnItem, index) => {
 			return (
 				<td key={index} className={styles.table__cell}>
-					{item[columnItem.value] ? (
+					{item[columnItem.value].toString() === 'true'
+						? 'Активен'
+						: item[columnItem.value].toString() === 'false'
+						? 'Скрыт'
+						: item[columnItem.value]}
+					{/* {item[columnItem.value] ? (
 						item[columnItem.value]
 					) : (
 						<input type='checkbox'></input>
-					)}
+					)} */}
 				</td>
 			)
 		})}

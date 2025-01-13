@@ -22,21 +22,23 @@ export const navsList = [
 		imageSrc: header1,
 	},
 ]
+export const catalogList = [
+	{
+		id: 5,
+		title: 'Каталог 1',
+		imageSrc: header1,
+	},
+	{
+		id: 6,
+		title: 'Каталог 2',
+		imageSrc: header1,
+	},
+]
 
 export const footersList = [
 	{
-		id: 10,
-		title: 'Подвал 1',
-		imageSrc: '',
-	},
-	{
 		id: 11,
-		title: 'Подвал 2',
-		imageSrc: '',
-	},
-	{
-		id: 12,
-		title: 'Подвал 3',
+		title: 'Подвал 1',
 		imageSrc: '',
 	},
 ]
@@ -44,5 +46,6 @@ export const footersList = [
 export const componentsMap = {
 	headersList: headersList,
 	navsList: navsList,
+	catalogList: catalogList,
 	footersList: footersList,
 }

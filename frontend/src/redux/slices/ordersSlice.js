@@ -1,16 +1,45 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getOrdersAPI } from '../../http/ordersAPI'
+import {
+	orderСreateAPI,
+	getOrdersAPI,
+	getOrdersCustomerAPI,
+} from '../../http/ordersAPI'
 
 const initialState = {
-	ordersList: [],
+	ordersListAdmin: [],
+	ordersListCustomer: [],
 	status: null,
 }
 
-export const getOrders = createAsyncThunk(
-	'orders/getOrders',
+export const getOrdersAdmin = createAsyncThunk(
+	'orders/getOrdersAdmin',
 	async (_, thunkAPI) => {
 		try {
 			const { data } = await getOrdersAPI()
+			return data
+		} catch (err) {
+			return thunkAPI.rejectWithValue(err)
+		}
+	}
+)
+
+export const getOrdersCustomer = createAsyncThunk(
+	'orders/getOrdersCustomer',
+	async (_, thunkAPI) => {
+		try {
+			const { data } = await getOrdersCustomerAPI()
+			return data
+		} catch (err) {
+			return thunkAPI.rejectWithValue(err)
+		}
+	}
+)
+
+export const orderСreate = createAsyncThunk(
+	'orders/orderСreate',
+	async (comment, thunkAPI) => {
+		try {
+			const { data } = await orderСreateAPI(comment)
 			return data
 		} catch (err) {
 			return thunkAPI.rejectWithValue(err)
@@ -24,14 +53,24 @@ const ordersSlice = createSlice({
 
 	extraReducers: builder => {
 		builder
-			.addCase(getOrders.pending, state => {
+			.addCase(getOrdersAdmin.pending, state => {
 				state.status = 'loading'
 			})
-			.addCase(getOrders.fulfilled, (state, action) => {
-				state.ordersList = action.payload
+			.addCase(getOrdersAdmin.fulfilled, (state, action) => {
+				state.ordersListAdmin = action.payload
 				state.status = 'resolved'
 			})
-			.addCase(getOrders.rejected, state => {
+			.addCase(getOrdersAdmin.rejected, state => {
+				state.status = 'rejected'
+			})
+			.addCase(getOrdersCustomer.pending, state => {
+				state.status = 'loading'
+			})
+			.addCase(getOrdersCustomer.fulfilled, (state, action) => {
+				state.ordersListCustomer = action.payload
+				state.status = 'resolved'
+			})
+			.addCase(getOrdersCustomer.rejected, state => {
 				state.status = 'rejected'
 			})
 	},

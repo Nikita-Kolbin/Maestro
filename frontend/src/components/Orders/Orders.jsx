@@ -6,16 +6,16 @@ import cabinetStyles from '../Cabinet/cabinet.module.scss'
 
 import stylesTable from '../Table/table.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrders } from '../../redux/slices/ordersSlice'
+import { getOrdersAdmin } from '../../redux/slices/ordersSlice'
 
 const Orders = () => {
 	const dispatch = useDispatch()
 
 	const [dataTable, setDataTable] = useState()
-	const data = useSelector(state => state.orders.ordersList)
+	const data = useSelector(state => state.orders.ordersListAdmin)
 
 	useEffect(() => {
-		dispatch(getOrders())
+		dispatch(getOrdersAdmin())
 	}, [])
 
 	useEffect(() => {
@@ -29,7 +29,7 @@ const Orders = () => {
 		{ heading: 'Клиент', value: 'customer_id' },
 		{ heading: 'Статус', value: 'status' },
 	]
-	
+
 	return (
 		<>
 			<section className={cabinetStyles.personalCabinet + ` container`}>
